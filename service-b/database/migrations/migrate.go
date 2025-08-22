@@ -1,12 +1,12 @@
 package migrations
 
 import (
-    "database/sql"
-    "log"
+	"database/sql"
+	"log"
 
-    "github.com/golang-migrate/migrate/v4"
-    "github.com/golang-migrate/migrate/v4/database/mysql"
-    _ "github.com/golang-migrate/migrate/v4/source/file"
+	"github.com/golang-migrate/migrate/v4"
+	"github.com/golang-migrate/migrate/v4/database/mysql"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
 )
 
 func RunDatabaseMigrations(db *sql.DB, dbName string) {
@@ -16,7 +16,7 @@ func RunDatabaseMigrations(db *sql.DB, dbName string) {
 	}
 
 	m, err := migrate.NewWithDatabaseInstance(
-		"file://db/migrations",
+		"file://database/migrations",
 		dbName,
 		driver,
 	)
