@@ -10,13 +10,13 @@ import (
 )
 
 type SensorDatum struct {
-	ID          uint64       `json:"id"`
-	SensorValue float64      `json:"sensor_value"`
-	SensorType  string       `json:"sensor_type"`
-	Id1         string       `json:"id1"`
-	Id2         int32        `json:"id2"`
-	Timestamp   time.Time    `json:"timestamp"`
-	CreatedAt   time.Time    `json:"created_at"`
-	UpdatedAt   time.Time    `json:"updated_at"`
-	DeletedAt   sql.NullTime `json:"deleted_at"`
+	ID           int64        `json:"id"`
+	SensorType   string       `json:"sensor_type"`
+	SensorValue  float64      `json:"sensor_value"`
+	DeviceCode   string       `json:"device_code"`
+	DeviceNumber int32        `json:"device_number"`
+	Timestamp    time.Time    `json:"timestamp"`
+	CreatedAt    time.Time    `json:"created_at"`
+	UpdatedAt    time.Time    `json:"updated_at"`
+	DeletedAt    sql.NullTime `json:"deleted_at"`
 }

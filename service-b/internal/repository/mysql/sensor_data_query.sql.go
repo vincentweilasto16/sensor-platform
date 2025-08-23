@@ -10,34 +10,70 @@ import (
 	"time"
 )
 
+const countSensorDataByDeviceCodeAndNumber = `-- name: CountSensorDataByDeviceCodeAndNumber :one
+SELECT COUNT(*)
+FROM sensor_data
+WHERE device_code = ? AND device_number = ?
+`
+
+type CountSensorDataByDeviceCodeAndNumberParams struct {
+	DeviceCode   string `json:"device_code"`
+	DeviceNumber int32  `json:"device_number"`
+}
+
+func (q *Queries) CountSensorDataByDeviceCodeAndNumber(ctx context.Context, arg CountSensorDataByDeviceCodeAndNumberParams) (int64, error) {
+	row := q.db.QueryRowContext(ctx, countSensorDataByDeviceCodeAndNumber, arg.DeviceCode, arg.DeviceNumber)
+	var count int64
+	err := row.Scan(&count)
+	return count, err
+}
+
 const deleteSensorData = `-- name: DeleteSensorData :exec
 DELETE FROM sensor_data
-WHERE id1 = ? AND id2 = ? AND timestamp = ?
+WHERE device_code = ?
+    AND device_number = ?
+    AND timestamp = ?
 `
 
 type DeleteSensorDataParams struct {
-	Id1       string    `json:"id1"`
-	Id2       int32     `json:"id2"`
-	Timestamp time.Time `json:"timestamp"`
+	DeviceCode   string    `json:"device_code"`
+	DeviceNumber int32     `json:"device_number"`
+	Timestamp    time.Time `json:"timestamp"`
 }
 
 func (q *Queries) DeleteSensorData(ctx context.Context, arg DeleteSensorDataParams) error {
-	_, err := q.db.ExecContext(ctx, deleteSensorData, arg.Id1, arg.Id2, arg.Timestamp)
+	_, err := q.db.ExecContext(ctx, deleteSensorData, arg.DeviceCode, arg.DeviceNumber, arg.Timestamp)
 	return err
 }
 
-const getSensorDataByID = `-- name: GetSensorDataByID :many
-SELECT id, sensor_value, sensor_type, id1, id2, timestamp, created_at, updated_at, deleted_at FROM sensor_data
-WHERE id1 = ? AND id2 = ?
+const getSensorDataByDeviceAndTime = `-- name: GetSensorDataByDeviceAndTime :many
+SELECT id, sensor_type, sensor_value, device_code, device_number, timestamp, created_at, updated_at, deleted_at
+FROM sensor_data
+WHERE device_code = ?
+    AND device_number = ?
+    AND timestamp BETWEEN ? AND ?
+ORDER BY created_at DESC
+LIMIT ? OFFSET ?
 `
 
-type GetSensorDataByIDParams struct {
-	Id1 string `json:"id1"`
-	Id2 int32  `json:"id2"`
+type GetSensorDataByDeviceAndTimeParams struct {
+	DeviceCode    string    `json:"device_code"`
+	DeviceNumber  int32     `json:"device_number"`
+	FromTimestamp time.Time `json:"from_timestamp"`
+	ToTimestamp   time.Time `json:"to_timestamp"`
+	Limit         int32     `json:"limit"`
+	Offset        int32     `json:"offset"`
 }
 
-func (q *Queries) GetSensorDataByID(ctx context.Context, arg GetSensorDataByIDParams) ([]SensorDatum, error) {
-	rows, err := q.db.QueryContext(ctx, getSensorDataByID, arg.Id1, arg.Id2)
+func (q *Queries) GetSensorDataByDeviceAndTime(ctx context.Context, arg GetSensorDataByDeviceAndTimeParams) ([]SensorDatum, error) {
+	rows, err := q.db.QueryContext(ctx, getSensorDataByDeviceAndTime,
+		arg.DeviceCode,
+		arg.DeviceNumber,
+		arg.FromTimestamp,
+		arg.ToTimestamp,
+		arg.Limit,
+		arg.Offset,
+	)
 	if err != nil {
 		return nil, err
 	}
@@ -47,10 +83,64 @@ func (q *Queries) GetSensorDataByID(ctx context.Context, arg GetSensorDataByIDPa
 		var i SensorDatum
 		if err := rows.Scan(
 			&i.ID,
-			&i.SensorValue,
 			&i.SensorType,
-			&i.Id1,
-			&i.Id2,
+			&i.SensorValue,
+			&i.DeviceCode,
+			&i.DeviceNumber,
+			&i.Timestamp,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+			&i.DeletedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const getSensorDataByDeviceCodeAndNumber = `-- name: GetSensorDataByDeviceCodeAndNumber :many
+SELECT id, sensor_type, sensor_value, device_code, device_number, timestamp, created_at, updated_at, deleted_at
+FROM sensor_data
+WHERE device_code = ?
+    AND device_number = ?
+ORDER BY created_at DESC
+LIMIT ? OFFSET ?
+`
+
+type GetSensorDataByDeviceCodeAndNumberParams struct {
+	DeviceCode   string `json:"device_code"`
+	DeviceNumber int32  `json:"device_number"`
+	Limit        int32  `json:"limit"`
+	Offset       int32  `json:"offset"`
+}
+
+func (q *Queries) GetSensorDataByDeviceCodeAndNumber(ctx context.Context, arg GetSensorDataByDeviceCodeAndNumberParams) ([]SensorDatum, error) {
+	rows, err := q.db.QueryContext(ctx, getSensorDataByDeviceCodeAndNumber,
+		arg.DeviceCode,
+		arg.DeviceNumber,
+		arg.Limit,
+		arg.Offset,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []SensorDatum
+	for rows.Next() {
+		var i SensorDatum
+		if err := rows.Scan(
+			&i.ID,
+			&i.SensorType,
+			&i.SensorValue,
+			&i.DeviceCode,
+			&i.DeviceNumber,
 			&i.Timestamp,
 			&i.CreatedAt,
 			&i.UpdatedAt,
@@ -70,17 +160,29 @@ func (q *Queries) GetSensorDataByID(ctx context.Context, arg GetSensorDataByIDPa
 }
 
 const getSensorDataByTime = `-- name: GetSensorDataByTime :many
-SELECT id, sensor_value, sensor_type, id1, id2, timestamp, created_at, updated_at, deleted_at FROM sensor_data
+;
+
+SELECT id, sensor_type, sensor_value, device_code, device_number, timestamp, created_at, updated_at, deleted_at
+FROM sensor_data
 WHERE timestamp BETWEEN ? AND ?
+ORDER BY created_at DESC
+LIMIT ? OFFSET ?
 `
 
 type GetSensorDataByTimeParams struct {
 	FromTimestamp time.Time `json:"from_timestamp"`
 	ToTimestamp   time.Time `json:"to_timestamp"`
+	Limit         int32     `json:"limit"`
+	Offset        int32     `json:"offset"`
 }
 
 func (q *Queries) GetSensorDataByTime(ctx context.Context, arg GetSensorDataByTimeParams) ([]SensorDatum, error) {
-	rows, err := q.db.QueryContext(ctx, getSensorDataByTime, arg.FromTimestamp, arg.ToTimestamp)
+	rows, err := q.db.QueryContext(ctx, getSensorDataByTime,
+		arg.FromTimestamp,
+		arg.ToTimestamp,
+		arg.Limit,
+		arg.Offset,
+	)
 	if err != nil {
 		return nil, err
 	}
@@ -90,10 +192,10 @@ func (q *Queries) GetSensorDataByTime(ctx context.Context, arg GetSensorDataByTi
 		var i SensorDatum
 		if err := rows.Scan(
 			&i.ID,
-			&i.SensorValue,
 			&i.SensorType,
-			&i.Id1,
-			&i.Id2,
+			&i.SensorValue,
+			&i.DeviceCode,
+			&i.DeviceNumber,
 			&i.Timestamp,
 			&i.CreatedAt,
 			&i.UpdatedAt,
@@ -113,24 +215,24 @@ func (q *Queries) GetSensorDataByTime(ctx context.Context, arg GetSensorDataByTi
 }
 
 const insertSensorData = `-- name: InsertSensorData :exec
-INSERT INTO sensor_data (sensor_value, sensor_type, id1, id2, timestamp)
+INSERT INTO sensor_data (sensor_type, sensor_value, device_code, device_number, timestamp)
 VALUES (?, ?, ?, ?, ?)
 `
 
 type InsertSensorDataParams struct {
-	SensorValue float64   `json:"sensor_value"`
-	SensorType  string    `json:"sensor_type"`
-	Id1         string    `json:"id1"`
-	Id2         int32     `json:"id2"`
-	Timestamp   time.Time `json:"timestamp"`
+	SensorType   string    `json:"sensor_type"`
+	SensorValue  float64   `json:"sensor_value"`
+	DeviceCode   string    `json:"device_code"`
+	DeviceNumber int32     `json:"device_number"`
+	Timestamp    time.Time `json:"timestamp"`
 }
 
 func (q *Queries) InsertSensorData(ctx context.Context, arg InsertSensorDataParams) error {
 	_, err := q.db.ExecContext(ctx, insertSensorData,
-		arg.SensorValue,
 		arg.SensorType,
-		arg.Id1,
-		arg.Id2,
+		arg.SensorValue,
+		arg.DeviceCode,
+		arg.DeviceNumber,
 		arg.Timestamp,
 	)
 	return err
@@ -139,21 +241,23 @@ func (q *Queries) InsertSensorData(ctx context.Context, arg InsertSensorDataPara
 const updateSensorData = `-- name: UpdateSensorData :exec
 UPDATE sensor_data
 SET sensor_value = ?
-WHERE id1 = ? AND id2 = ? AND timestamp = ?
+WHERE device_code = ?
+    AND device_number = ?
+    AND timestamp = ?
 `
 
 type UpdateSensorDataParams struct {
-	SensorValue float64   `json:"sensor_value"`
-	Id1         string    `json:"id1"`
-	Id2         int32     `json:"id2"`
-	Timestamp   time.Time `json:"timestamp"`
+	SensorValue  float64   `json:"sensor_value"`
+	DeviceCode   string    `json:"device_code"`
+	DeviceNumber int32     `json:"device_number"`
+	Timestamp    time.Time `json:"timestamp"`
 }
 
 func (q *Queries) UpdateSensorData(ctx context.Context, arg UpdateSensorDataParams) error {
 	_, err := q.db.ExecContext(ctx, updateSensorData,
 		arg.SensorValue,
-		arg.Id1,
-		arg.Id2,
+		arg.DeviceCode,
+		arg.DeviceNumber,
 		arg.Timestamp,
 	)
 	return err
