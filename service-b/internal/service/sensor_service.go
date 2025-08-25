@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"database/sql"
 	"service-b/internal/dto/request"
 	"service-b/internal/errors"
 	"service-b/internal/repository"
@@ -10,7 +11,7 @@ import (
 
 //go:generate mockgen -source=./sensor_service.go -destination=./mock/sensor_service_mock.go -package=mock service-b/internal/service ISensorService
 type ISensorService interface {
-	GetSensorByDevice(ctx context.Context, params *request.GetSensorByDeviceRequest) ([]*entity.SensorDatum, int64, error)
+	GetSensors(ctx context.Context, params *request.GetSensorsRequest) ([]*entity.SensorDatum, int64, error)
 }
 
 type SensorService struct {
@@ -23,23 +24,62 @@ func NewSensorService(repo repository.IMySQLRepository) *SensorService {
 	}
 }
 
-func (s *SensorService) GetSensorByDevice(ctx context.Context, params *request.GetSensorByDeviceRequest) ([]*entity.SensorDatum, int64, error) {
-	sensorDatas, err := s.repo.GetSensorDataByDeviceCodeAndNumber(ctx, entity.GetSensorDataByDeviceCodeAndNumberParams{
-		DeviceCode:   params.DeviceCode,
-		DeviceNumber: params.DeviceNumber,
-		Limit:        params.Limit,
-		Offset:       (params.Page - 1) * params.Limit,
-	})
-	if err == nil {
-		return nil, 0, errors.New(errors.NotFound, "sensors not found")
+func (s *SensorService) GetSensors(ctx context.Context, params *request.GetSensorsRequest) ([]*entity.SensorDatum, int64, error) {
+
+	// validate start time cannot be greater than end time
+	if !params.StartTime.IsZero() && !params.EndTime.IsZero() && params.StartTime.After(params.EndTime) {
+		return nil, 0, errors.New(errors.BadRequest, "start time cannot be greater than end time")
 	}
 
-	total, err := s.repo.CountSensorDataByDeviceCodeAndNumber(ctx, entity.CountSensorDataByDeviceCodeAndNumberParams{
-		DeviceCode:   params.DeviceCode,
-		DeviceNumber: params.DeviceNumber,
+	total, err := s.repo.CountSensors(ctx, entity.CountSensorsParams{
+		DeviceCode: sql.NullString{
+			String: params.DeviceCode,
+			Valid:  params.DeviceCode != "",
+		},
+		DeviceNumber: sql.NullInt32{
+			Int32: params.DeviceNumber,
+			Valid: params.DeviceNumber != 0,
+		},
+		StartTime: sql.NullTime{
+			Time:  params.StartTime,
+			Valid: !params.StartTime.IsZero(),
+		},
+		EndTime: sql.NullTime{
+			Time:  params.EndTime,
+			Valid: !params.EndTime.IsZero(),
+		},
 	})
 	if err != nil {
-		return nil, 0, errors.New(errors.NotFound, "sensors not found")
+		return nil, 0, errors.New(errors.InternalServer, "failed to count sensors")
+	}
+
+	// if sensors are empty, early return it
+	if total == 0 {
+		return []*entity.SensorDatum{}, 0, nil
+	}
+
+	sensorDatas, err := s.repo.GetSensors(ctx, entity.GetSensorsParams{
+		DeviceCode: sql.NullString{
+			String: params.DeviceCode,
+			Valid:  params.DeviceCode != "",
+		},
+		DeviceNumber: sql.NullInt32{
+			Int32: params.DeviceNumber,
+			Valid: params.DeviceNumber != 0,
+		},
+		StartTime: sql.NullTime{
+			Time:  params.StartTime,
+			Valid: !params.StartTime.IsZero(),
+		},
+		EndTime: sql.NullTime{
+			Time:  params.EndTime,
+			Valid: !params.EndTime.IsZero(),
+		},
+		Limit:  params.Limit,
+		Offset: (params.Page - 1) * params.Limit,
+	})
+	if err != nil {
+		return nil, 0, errors.New(errors.InternalServer, "failed to fetch sensors")
 	}
 
 	sensors := make([]*entity.SensorDatum, len(sensorDatas))

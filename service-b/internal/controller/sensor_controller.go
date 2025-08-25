@@ -20,10 +20,10 @@ func NewSensorController(SensorService service.ISensorService) *SensorController
 	}
 }
 
-func (c *SensorController) GetSensorByDevice(ctx echo.Context) error {
+func (c *SensorController) GetSensors(ctx echo.Context) error {
 	// @TODO: prepare the context
 
-	var queryParams request.GetSensorByDeviceRequest
+	var queryParams request.GetSensorsRequest
 	if err := request.SetQueryParams(ctx, &queryParams); err != nil {
 		return response.RespondError(ctx, err)
 	}
@@ -32,7 +32,7 @@ func (c *SensorController) GetSensorByDevice(ctx echo.Context) error {
 		return response.RespondError(ctx, err)
 	}
 
-	sensorData, total, err := c.SensorService.GetSensorByDevice(ctx.Request().Context(), &queryParams)
+	sensorData, total, err := c.SensorService.GetSensors(ctx.Request().Context(), &queryParams)
 	if err != nil {
 		return response.RespondError(ctx, err)
 	}

@@ -36,18 +36,18 @@ func (m *MockISensorService) EXPECT() *MockISensorServiceMockRecorder {
 	return m.recorder
 }
 
-// GetSensorByDevice mocks base method.
-func (m *MockISensorService) GetSensorByDevice(ctx context.Context, params *request.GetSensorByDeviceRequest) ([]*sqlc.SensorDatum, int64, error) {
+// GetSensors mocks base method.
+func (m *MockISensorService) GetSensors(ctx context.Context, params *request.GetSensorsRequest) ([]*sqlc.SensorDatum, int64, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetSensorByDevice", ctx, params)
+	ret := m.ctrl.Call(m, "GetSensors", ctx, params)
 	ret0, _ := ret[0].([]*sqlc.SensorDatum)
 	ret1, _ := ret[1].(int64)
 	ret2, _ := ret[2].(error)
 	return ret0, ret1, ret2
 }
 
-// GetSensorByDevice indicates an expected call of GetSensorByDevice.
-func (mr *MockISensorServiceMockRecorder) GetSensorByDevice(ctx, params interface{}) *gomock.Call {
+// GetSensors indicates an expected call of GetSensors.
+func (mr *MockISensorServiceMockRecorder) GetSensors(ctx, params interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSensorByDevice", reflect.TypeOf((*MockISensorService)(nil).GetSensorByDevice), ctx, params)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSensors", reflect.TypeOf((*MockISensorService)(nil).GetSensors), ctx, params)
 }

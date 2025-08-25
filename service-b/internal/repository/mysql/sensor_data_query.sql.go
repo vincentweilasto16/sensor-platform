@@ -7,22 +7,38 @@ package sqlc
 
 import (
 	"context"
+	"database/sql"
 	"time"
 )
 
-const countSensorDataByDeviceCodeAndNumber = `-- name: CountSensorDataByDeviceCodeAndNumber :one
+const countSensors = `-- name: CountSensors :one
 SELECT COUNT(*)
 FROM sensor_data
-WHERE device_code = ? AND device_number = ?
+WHERE 
+    (? IS NULL OR device_code = ?)
+    AND (? IS NULL OR device_number = ?)
+    AND (? IS NULL OR timestamp >= ?)
+    AND (? IS NULL OR timestamp <= ?)
 `
 
-type CountSensorDataByDeviceCodeAndNumberParams struct {
-	DeviceCode   string `json:"device_code"`
-	DeviceNumber int32  `json:"device_number"`
+type CountSensorsParams struct {
+	DeviceCode   sql.NullString `json:"device_code"`
+	DeviceNumber sql.NullInt32  `json:"device_number"`
+	StartTime    sql.NullTime   `json:"start_time"`
+	EndTime      sql.NullTime   `json:"end_time"`
 }
 
-func (q *Queries) CountSensorDataByDeviceCodeAndNumber(ctx context.Context, arg CountSensorDataByDeviceCodeAndNumberParams) (int64, error) {
-	row := q.db.QueryRowContext(ctx, countSensorDataByDeviceCodeAndNumber, arg.DeviceCode, arg.DeviceNumber)
+func (q *Queries) CountSensors(ctx context.Context, arg CountSensorsParams) (int64, error) {
+	row := q.db.QueryRowContext(ctx, countSensors,
+		arg.DeviceCode,
+		arg.DeviceCode,
+		arg.DeviceNumber,
+		arg.DeviceNumber,
+		arg.StartTime,
+		arg.StartTime,
+		arg.EndTime,
+		arg.EndTime,
+	)
 	var count int64
 	err := row.Scan(&count)
 	return count, err
@@ -46,140 +62,37 @@ func (q *Queries) DeleteSensorData(ctx context.Context, arg DeleteSensorDataPara
 	return err
 }
 
-const getSensorDataByDeviceAndTime = `-- name: GetSensorDataByDeviceAndTime :many
+const getSensors = `-- name: GetSensors :many
 SELECT id, sensor_type, sensor_value, device_code, device_number, timestamp, created_at, updated_at, deleted_at
 FROM sensor_data
-WHERE device_code = ?
-    AND device_number = ?
-    AND timestamp BETWEEN ? AND ?
+WHERE 
+    (? IS NULL OR device_code = ?)
+    AND (? IS NULL OR device_number = ?)
+    AND (? IS NULL OR timestamp >= ?)
+    AND (? IS NULL OR timestamp <= ?)
 ORDER BY created_at DESC
 LIMIT ? OFFSET ?
 `
 
-type GetSensorDataByDeviceAndTimeParams struct {
-	DeviceCode    string    `json:"device_code"`
-	DeviceNumber  int32     `json:"device_number"`
-	FromTimestamp time.Time `json:"from_timestamp"`
-	ToTimestamp   time.Time `json:"to_timestamp"`
-	Limit         int32     `json:"limit"`
-	Offset        int32     `json:"offset"`
+type GetSensorsParams struct {
+	DeviceCode   sql.NullString `json:"device_code"`
+	DeviceNumber sql.NullInt32  `json:"device_number"`
+	StartTime    sql.NullTime   `json:"start_time"`
+	EndTime      sql.NullTime   `json:"end_time"`
+	Limit        int32          `json:"limit"`
+	Offset       int32          `json:"offset"`
 }
 
-func (q *Queries) GetSensorDataByDeviceAndTime(ctx context.Context, arg GetSensorDataByDeviceAndTimeParams) ([]SensorDatum, error) {
-	rows, err := q.db.QueryContext(ctx, getSensorDataByDeviceAndTime,
+func (q *Queries) GetSensors(ctx context.Context, arg GetSensorsParams) ([]SensorDatum, error) {
+	rows, err := q.db.QueryContext(ctx, getSensors,
+		arg.DeviceCode,
 		arg.DeviceCode,
 		arg.DeviceNumber,
-		arg.FromTimestamp,
-		arg.ToTimestamp,
-		arg.Limit,
-		arg.Offset,
-	)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	var items []SensorDatum
-	for rows.Next() {
-		var i SensorDatum
-		if err := rows.Scan(
-			&i.ID,
-			&i.SensorType,
-			&i.SensorValue,
-			&i.DeviceCode,
-			&i.DeviceNumber,
-			&i.Timestamp,
-			&i.CreatedAt,
-			&i.UpdatedAt,
-			&i.DeletedAt,
-		); err != nil {
-			return nil, err
-		}
-		items = append(items, i)
-	}
-	if err := rows.Close(); err != nil {
-		return nil, err
-	}
-	if err := rows.Err(); err != nil {
-		return nil, err
-	}
-	return items, nil
-}
-
-const getSensorDataByDeviceCodeAndNumber = `-- name: GetSensorDataByDeviceCodeAndNumber :many
-SELECT id, sensor_type, sensor_value, device_code, device_number, timestamp, created_at, updated_at, deleted_at
-FROM sensor_data
-WHERE device_code = ?
-    AND device_number = ?
-ORDER BY created_at DESC
-LIMIT ? OFFSET ?
-`
-
-type GetSensorDataByDeviceCodeAndNumberParams struct {
-	DeviceCode   string `json:"device_code"`
-	DeviceNumber int32  `json:"device_number"`
-	Limit        int32  `json:"limit"`
-	Offset       int32  `json:"offset"`
-}
-
-func (q *Queries) GetSensorDataByDeviceCodeAndNumber(ctx context.Context, arg GetSensorDataByDeviceCodeAndNumberParams) ([]SensorDatum, error) {
-	rows, err := q.db.QueryContext(ctx, getSensorDataByDeviceCodeAndNumber,
-		arg.DeviceCode,
 		arg.DeviceNumber,
-		arg.Limit,
-		arg.Offset,
-	)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	var items []SensorDatum
-	for rows.Next() {
-		var i SensorDatum
-		if err := rows.Scan(
-			&i.ID,
-			&i.SensorType,
-			&i.SensorValue,
-			&i.DeviceCode,
-			&i.DeviceNumber,
-			&i.Timestamp,
-			&i.CreatedAt,
-			&i.UpdatedAt,
-			&i.DeletedAt,
-		); err != nil {
-			return nil, err
-		}
-		items = append(items, i)
-	}
-	if err := rows.Close(); err != nil {
-		return nil, err
-	}
-	if err := rows.Err(); err != nil {
-		return nil, err
-	}
-	return items, nil
-}
-
-const getSensorDataByTime = `-- name: GetSensorDataByTime :many
-;
-
-SELECT id, sensor_type, sensor_value, device_code, device_number, timestamp, created_at, updated_at, deleted_at
-FROM sensor_data
-WHERE timestamp BETWEEN ? AND ?
-ORDER BY created_at DESC
-LIMIT ? OFFSET ?
-`
-
-type GetSensorDataByTimeParams struct {
-	FromTimestamp time.Time `json:"from_timestamp"`
-	ToTimestamp   time.Time `json:"to_timestamp"`
-	Limit         int32     `json:"limit"`
-	Offset        int32     `json:"offset"`
-}
-
-func (q *Queries) GetSensorDataByTime(ctx context.Context, arg GetSensorDataByTimeParams) ([]SensorDatum, error) {
-	rows, err := q.db.QueryContext(ctx, getSensorDataByTime,
-		arg.FromTimestamp,
-		arg.ToTimestamp,
+		arg.StartTime,
+		arg.StartTime,
+		arg.EndTime,
+		arg.EndTime,
 		arg.Limit,
 		arg.Offset,
 	)

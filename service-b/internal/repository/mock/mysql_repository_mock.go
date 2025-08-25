@@ -35,19 +35,19 @@ func (m *MockIMySQLRepository) EXPECT() *MockIMySQLRepositoryMockRecorder {
 	return m.recorder
 }
 
-// CountSensorDataByDeviceCodeAndNumber mocks base method.
-func (m *MockIMySQLRepository) CountSensorDataByDeviceCodeAndNumber(ctx context.Context, arg sqlc.CountSensorDataByDeviceCodeAndNumberParams) (int64, error) {
+// CountSensors mocks base method.
+func (m *MockIMySQLRepository) CountSensors(ctx context.Context, arg sqlc.CountSensorsParams) (int64, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CountSensorDataByDeviceCodeAndNumber", ctx, arg)
+	ret := m.ctrl.Call(m, "CountSensors", ctx, arg)
 	ret0, _ := ret[0].(int64)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// CountSensorDataByDeviceCodeAndNumber indicates an expected call of CountSensorDataByDeviceCodeAndNumber.
-func (mr *MockIMySQLRepositoryMockRecorder) CountSensorDataByDeviceCodeAndNumber(ctx, arg interface{}) *gomock.Call {
+// CountSensors indicates an expected call of CountSensors.
+func (mr *MockIMySQLRepositoryMockRecorder) CountSensors(ctx, arg interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CountSensorDataByDeviceCodeAndNumber", reflect.TypeOf((*MockIMySQLRepository)(nil).CountSensorDataByDeviceCodeAndNumber), ctx, arg)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CountSensors", reflect.TypeOf((*MockIMySQLRepository)(nil).CountSensors), ctx, arg)
 }
 
 // DeleteSensorData mocks base method.
@@ -64,49 +64,19 @@ func (mr *MockIMySQLRepositoryMockRecorder) DeleteSensorData(ctx, arg interface{
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteSensorData", reflect.TypeOf((*MockIMySQLRepository)(nil).DeleteSensorData), ctx, arg)
 }
 
-// GetSensorDataByDeviceAndTime mocks base method.
-func (m *MockIMySQLRepository) GetSensorDataByDeviceAndTime(ctx context.Context, arg sqlc.GetSensorDataByDeviceAndTimeParams) ([]sqlc.SensorDatum, error) {
+// GetSensors mocks base method.
+func (m *MockIMySQLRepository) GetSensors(ctx context.Context, arg sqlc.GetSensorsParams) ([]sqlc.SensorDatum, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetSensorDataByDeviceAndTime", ctx, arg)
+	ret := m.ctrl.Call(m, "GetSensors", ctx, arg)
 	ret0, _ := ret[0].([]sqlc.SensorDatum)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetSensorDataByDeviceAndTime indicates an expected call of GetSensorDataByDeviceAndTime.
-func (mr *MockIMySQLRepositoryMockRecorder) GetSensorDataByDeviceAndTime(ctx, arg interface{}) *gomock.Call {
+// GetSensors indicates an expected call of GetSensors.
+func (mr *MockIMySQLRepositoryMockRecorder) GetSensors(ctx, arg interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSensorDataByDeviceAndTime", reflect.TypeOf((*MockIMySQLRepository)(nil).GetSensorDataByDeviceAndTime), ctx, arg)
-}
-
-// GetSensorDataByDeviceCodeAndNumber mocks base method.
-func (m *MockIMySQLRepository) GetSensorDataByDeviceCodeAndNumber(ctx context.Context, arg sqlc.GetSensorDataByDeviceCodeAndNumberParams) ([]sqlc.SensorDatum, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetSensorDataByDeviceCodeAndNumber", ctx, arg)
-	ret0, _ := ret[0].([]sqlc.SensorDatum)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetSensorDataByDeviceCodeAndNumber indicates an expected call of GetSensorDataByDeviceCodeAndNumber.
-func (mr *MockIMySQLRepositoryMockRecorder) GetSensorDataByDeviceCodeAndNumber(ctx, arg interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSensorDataByDeviceCodeAndNumber", reflect.TypeOf((*MockIMySQLRepository)(nil).GetSensorDataByDeviceCodeAndNumber), ctx, arg)
-}
-
-// GetSensorDataByTime mocks base method.
-func (m *MockIMySQLRepository) GetSensorDataByTime(ctx context.Context, arg sqlc.GetSensorDataByTimeParams) ([]sqlc.SensorDatum, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetSensorDataByTime", ctx, arg)
-	ret0, _ := ret[0].([]sqlc.SensorDatum)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetSensorDataByTime indicates an expected call of GetSensorDataByTime.
-func (mr *MockIMySQLRepositoryMockRecorder) GetSensorDataByTime(ctx, arg interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSensorDataByTime", reflect.TypeOf((*MockIMySQLRepository)(nil).GetSensorDataByTime), ctx, arg)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSensors", reflect.TypeOf((*MockIMySQLRepository)(nil).GetSensors), ctx, arg)
 }
 
 // InsertSensorData mocks base method.

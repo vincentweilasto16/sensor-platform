@@ -3,6 +3,7 @@ package presenter
 import (
 	"service-b/internal/dto/response"
 	entity "service-b/internal/repository/mysql"
+	"time"
 
 	"github.com/guregu/null"
 )
@@ -12,16 +13,21 @@ func SensorResponse(e *entity.SensorDatum) *response.SensorResponse {
 		return nil
 	}
 
+	deletedAt := null.NewString("", false)
+	if e.DeletedAt.Valid {
+		deletedAt = null.NewString(e.DeletedAt.Time.UTC().Format(time.RFC3339), true)
+	}
+
 	return &response.SensorResponse{
 		ID:           e.ID,
 		SensorType:   e.SensorType,
 		SensorValue:  e.SensorValue,
 		DeviceCode:   e.DeviceCode,
 		DeviceNumber: e.DeviceNumber,
-		Timestamp:    e.Timestamp,
-		CreatedAt:    e.CreatedAt,
-		UpdatedAt:    e.UpdatedAt,
-		DeletedAt:    null.NewTime(e.DeletedAt.Time, e.DeletedAt.Valid),
+		Timestamp:    e.Timestamp.UTC().Format(time.RFC3339),
+		CreatedAt:    e.CreatedAt.UTC().Format(time.RFC3339),
+		UpdatedAt:    e.UpdatedAt.UTC().Format(time.RFC3339),
+		DeletedAt:    deletedAt,
 	}
 }
 
