@@ -21,15 +21,27 @@ type CreateSensorRequest struct {
 	Timestamp    time.Time `json:"timestamp" validate:"required"`
 }
 
-type UpdateSensorRequest struct {
-	SensorValue  float64   `json:"sensor_value" validate:"required"`
-	DeviceCode   string    `json:"device_code" validate:"required"`
-	DeviceNumber int32     `json:"device_number" validate:"required"`
-	Timestamp    time.Time `json:"timestamp" validate:"required"`
+type UpdateSensorsCriteriaRequest struct {
+	DeviceCode   string    `json:"device_code,omitempty"`
+	DeviceNumber int32     `json:"device_number,omitempty"`
+	StartTime    time.Time `json:"start_time,omitempty"`
+	EndTime      time.Time `json:"end_time,omitempty"`
 }
 
-type DeleteSensorRequest struct {
-	DeviceCode   string    `json:"device_code" validate:"required"`
-	DeviceNumber int32     `json:"device_number" validate:"required"`
-	Timestamp    time.Time `json:"timestamp" validate:"required"`
+type UpdateSensorsChangesRequest struct {
+	SensorValue float64   `json:"sensor_value" validate:"omitempty"`
+	SensorType  string    `json:"sensor_type" validate:"omitempty"`
+	Timestamp   time.Time `json:"timestamp" validate:"omitempty"`
+}
+
+type UpdateSensorsRequest struct {
+	Criteria UpdateSensorsCriteriaRequest `json:"criteria" validate:"required"`
+	Changes  UpdateSensorsChangesRequest  `json:"changes" validate:"required"`
+}
+
+type DeleteSensorsRequest struct {
+	DeviceCode   string    `json:"device_code" validate:"omitempty"`
+	DeviceNumber int32     `json:"device_number" validate:"omitempty"`
+	StartTime    time.Time `json:"start_time" validate:"omitempty"`
+	EndTime      time.Time `json:"end_time" query:"end_time" validate:"omitempty"`
 }

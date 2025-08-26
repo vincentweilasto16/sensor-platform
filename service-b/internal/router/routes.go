@@ -13,5 +13,7 @@ func RegisterRoutes(rg *echo.Group, ctrl *controller.Controllers) {
 	sensors := rg.Group(constants.SensorBasePath)
 	{
 		sensors.GET("", ctrl.SensorController.GetSensors)
+		sensors.PUT("", ctrl.SensorController.UpdateSensors)
+		sensors.DELETE("", ctrl.SensorController.DeleteSensors)
 	}
 }

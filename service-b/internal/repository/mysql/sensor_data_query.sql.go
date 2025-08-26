@@ -44,21 +44,33 @@ func (q *Queries) CountSensors(ctx context.Context, arg CountSensorsParams) (int
 	return count, err
 }
 
-const deleteSensorData = `-- name: DeleteSensorData :exec
+const deleteSensors = `-- name: DeleteSensors :exec
 DELETE FROM sensor_data
-WHERE device_code = ?
-    AND device_number = ?
-    AND timestamp = ?
+WHERE 
+    (? IS NULL OR device_code = ?)
+    AND (? IS NULL OR device_number = ?)
+    AND (? IS NULL OR timestamp >= ?)
+    AND (? IS NULL OR timestamp <= ?)
 `
 
-type DeleteSensorDataParams struct {
-	DeviceCode   string    `json:"device_code"`
-	DeviceNumber int32     `json:"device_number"`
-	Timestamp    time.Time `json:"timestamp"`
+type DeleteSensorsParams struct {
+	DeviceCode   sql.NullString `json:"device_code"`
+	DeviceNumber sql.NullInt32  `json:"device_number"`
+	StartTime    sql.NullTime   `json:"start_time"`
+	EndTime      sql.NullTime   `json:"end_time"`
 }
 
-func (q *Queries) DeleteSensorData(ctx context.Context, arg DeleteSensorDataParams) error {
-	_, err := q.db.ExecContext(ctx, deleteSensorData, arg.DeviceCode, arg.DeviceNumber, arg.Timestamp)
+func (q *Queries) DeleteSensors(ctx context.Context, arg DeleteSensorsParams) error {
+	_, err := q.db.ExecContext(ctx, deleteSensors,
+		arg.DeviceCode,
+		arg.DeviceCode,
+		arg.DeviceNumber,
+		arg.DeviceNumber,
+		arg.StartTime,
+		arg.StartTime,
+		arg.EndTime,
+		arg.EndTime,
+	)
 	return err
 }
 
@@ -151,27 +163,42 @@ func (q *Queries) InsertSensorData(ctx context.Context, arg InsertSensorDataPara
 	return err
 }
 
-const updateSensorData = `-- name: UpdateSensorData :exec
+const updateSensors = `-- name: UpdateSensors :exec
 UPDATE sensor_data
-SET sensor_value = ?
-WHERE device_code = ?
-    AND device_number = ?
-    AND timestamp = ?
+SET 
+    sensor_value = COALESCE(?, sensor_value),
+    sensor_type = COALESCE(?, sensor_type),
+    timestamp = COALESCE(?, timestamp)
+WHERE
+    (? IS NULL OR device_code = ?)
+    AND (? IS NULL OR device_number = ?)
+    AND (? IS NULL OR timestamp >= ?)
+    AND (? IS NULL OR timestamp <= ?)
 `
 
-type UpdateSensorDataParams struct {
-	SensorValue  float64   `json:"sensor_value"`
-	DeviceCode   string    `json:"device_code"`
-	DeviceNumber int32     `json:"device_number"`
-	Timestamp    time.Time `json:"timestamp"`
+type UpdateSensorsParams struct {
+	SensorValue  sql.NullFloat64 `json:"sensor_value"`
+	SensorType   sql.NullString  `json:"sensor_type"`
+	Timestamp    sql.NullTime    `json:"timestamp"`
+	DeviceCode   sql.NullString  `json:"device_code"`
+	DeviceNumber sql.NullInt32   `json:"device_number"`
+	StartTime    sql.NullTime    `json:"start_time"`
+	EndTime      sql.NullTime    `json:"end_time"`
 }
 
-func (q *Queries) UpdateSensorData(ctx context.Context, arg UpdateSensorDataParams) error {
-	_, err := q.db.ExecContext(ctx, updateSensorData,
+func (q *Queries) UpdateSensors(ctx context.Context, arg UpdateSensorsParams) error {
+	_, err := q.db.ExecContext(ctx, updateSensors,
 		arg.SensorValue,
+		arg.SensorType,
+		arg.Timestamp,
+		arg.DeviceCode,
 		arg.DeviceCode,
 		arg.DeviceNumber,
-		arg.Timestamp,
+		arg.DeviceNumber,
+		arg.StartTime,
+		arg.StartTime,
+		arg.EndTime,
+		arg.EndTime,
 	)
 	return err
 }

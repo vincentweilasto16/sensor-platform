@@ -12,6 +12,6 @@ type IMySQLRepository interface {
 	GetSensors(ctx context.Context, arg entity.GetSensorsParams) ([]entity.SensorDatum, error)
 	CountSensors(ctx context.Context, arg entity.CountSensorsParams) (int64, error)
 	InsertSensorData(ctx context.Context, arg entity.InsertSensorDataParams) error
-	UpdateSensorData(ctx context.Context, arg entity.UpdateSensorDataParams) error
-	DeleteSensorData(ctx context.Context, arg entity.DeleteSensorDataParams) error
+	UpdateSensors(ctx context.Context, arg entity.UpdateSensorsParams) error
+	DeleteSensors(ctx context.Context, arg entity.DeleteSensorsParams) error
 }

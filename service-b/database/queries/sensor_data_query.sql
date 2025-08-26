@@ -22,15 +22,22 @@ WHERE
     AND (sqlc.narg(start_time) IS NULL OR timestamp >= sqlc.narg(start_time))
     AND (sqlc.narg(end_time) IS NULL OR timestamp <= sqlc.narg(end_time));
     
--- name: UpdateSensorData :exec
-UPDATE sensor_data
-SET sensor_value = ?
-WHERE device_code = ?
-    AND device_number = ?
-    AND timestamp = ?;
-    
--- name: DeleteSensorData :exec
+-- name: DeleteSensors :exec
 DELETE FROM sensor_data
-WHERE device_code = ?
-    AND device_number = ?
-    AND timestamp = ?;
+WHERE 
+    (sqlc.narg(device_code) IS NULL OR device_code = sqlc.narg(device_code))
+    AND (sqlc.narg(device_number) IS NULL OR device_number = sqlc.narg(device_number))
+    AND (sqlc.narg(start_time) IS NULL OR timestamp >= sqlc.narg(start_time))
+    AND (sqlc.narg(end_time) IS NULL OR timestamp <= sqlc.narg(end_time));
+
+-- name: UpdateSensors :exec
+UPDATE sensor_data
+SET 
+    sensor_value = COALESCE(sqlc.narg(sensor_value), sensor_value),
+    sensor_type = COALESCE(sqlc.narg(sensor_type), sensor_type),
+    timestamp = COALESCE(sqlc.narg(timestamp), timestamp)
+WHERE
+    (sqlc.narg(device_code) IS NULL OR device_code = sqlc.narg(device_code))
+    AND (sqlc.narg(device_number) IS NULL OR device_number = sqlc.narg(device_number))
+    AND (sqlc.narg(start_time) IS NULL OR timestamp >= sqlc.narg(start_time))
+    AND (sqlc.narg(end_time) IS NULL OR timestamp <= sqlc.narg(end_time));

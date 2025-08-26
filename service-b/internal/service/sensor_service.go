@@ -13,6 +13,8 @@ import (
 type ISensorService interface {
 	GetSensors(ctx context.Context, params *request.GetSensorsRequest) ([]*entity.SensorDatum, int64, error)
 	CreateSensor(ctx context.Context, params *request.CreateSensorRequest) error
+	DeleteSensors(ctx context.Context, params *request.DeleteSensorsRequest) error
+	UpdateSensors(ctx context.Context, params *request.UpdateSensorsRequest) error
 }
 
 type SensorService struct {
@@ -101,6 +103,99 @@ func (s *SensorService) CreateSensor(ctx context.Context, params *request.Create
 	})
 	if err != nil {
 		return errors.New(errors.InternalServer, "failed to store sensor")
+	}
+
+	return nil
+}
+
+func (s *SensorService) DeleteSensors(ctx context.Context, params *request.DeleteSensorsRequest) error {
+	if params.DeviceCode == "" && params.DeviceNumber == 0 && params.StartTime.IsZero() && params.EndTime.IsZero() {
+		return errors.New(errors.BadRequest, "at least one filter is required for deletion")
+	}
+
+	// validate start time cannot be greater than end time
+	if !params.StartTime.IsZero() && !params.EndTime.IsZero() && params.StartTime.After(params.EndTime) {
+		return errors.New(errors.BadRequest, "start time cannot be greater than end time")
+	}
+
+	err := s.repo.DeleteSensors(ctx, entity.DeleteSensorsParams{
+		DeviceCode: sql.NullString{
+			String: params.DeviceCode,
+			Valid:  params.DeviceCode != "",
+		},
+		DeviceNumber: sql.NullInt32{
+			Int32: params.DeviceNumber,
+			Valid: params.DeviceNumber != 0,
+		},
+		StartTime: sql.NullTime{
+			Time:  params.StartTime,
+			Valid: !params.StartTime.IsZero(),
+		},
+		EndTime: sql.NullTime{
+			Time:  params.EndTime,
+			Valid: !params.EndTime.IsZero(),
+		},
+	})
+	if err != nil {
+		return errors.New(errors.InternalServer, "failed to delete sensors")
+	}
+
+	return nil
+}
+
+func (s *SensorService) UpdateSensors(ctx context.Context, params *request.UpdateSensorsRequest) error {
+	// Validate at least one filter is provided
+	if params.Criteria.DeviceCode == "" &&
+		params.Criteria.DeviceNumber == 0 &&
+		params.Criteria.StartTime.IsZero() &&
+		params.Criteria.EndTime.IsZero() {
+		return errors.New(errors.BadRequest, "at least one filter is required for update")
+	}
+
+	// validate start time cannot be greater than end time
+	if !params.Criteria.StartTime.IsZero() && !params.Criteria.EndTime.IsZero() && params.Criteria.StartTime.After(params.Criteria.EndTime) {
+		return errors.New(errors.BadRequest, "start time cnnaot be greater than end time")
+	}
+
+	// Validate at least one change is provided
+	if params.Changes.SensorValue == 0 &&
+		params.Changes.SensorType == "" &&
+		params.Changes.Timestamp.IsZero() {
+		return errors.New(errors.BadRequest, "at least one field to update must be provided")
+	}
+
+	err := s.repo.UpdateSensors(ctx, entity.UpdateSensorsParams{
+		SensorValue: sql.NullFloat64{
+			Float64: params.Changes.SensorValue,
+			Valid:   params.Changes.SensorValue != 0,
+		},
+		SensorType: sql.NullString{
+			String: params.Changes.SensorType,
+			Valid:  params.Changes.SensorType != "",
+		},
+		Timestamp: sql.NullTime{
+			Time:  params.Changes.Timestamp,
+			Valid: !params.Changes.Timestamp.IsZero(),
+		},
+		DeviceCode: sql.NullString{
+			String: params.Criteria.DeviceCode,
+			Valid:  params.Criteria.DeviceCode != "",
+		},
+		DeviceNumber: sql.NullInt32{
+			Int32: params.Criteria.DeviceNumber,
+			Valid: params.Criteria.DeviceNumber != 0,
+		},
+		StartTime: sql.NullTime{
+			Time:  params.Criteria.StartTime,
+			Valid: !params.Criteria.StartTime.IsZero(),
+		},
+		EndTime: sql.NullTime{
+			Time:  params.Criteria.EndTime,
+			Valid: !params.Criteria.EndTime.IsZero(),
+		},
+	})
+	if err != nil {
+		return errors.New(errors.InternalServer, "failed to update sensors")
 	}
 
 	return nil

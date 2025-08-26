@@ -50,6 +50,20 @@ func (mr *MockISensorServiceMockRecorder) CreateSensor(ctx, params interface{}) 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateSensor", reflect.TypeOf((*MockISensorService)(nil).CreateSensor), ctx, params)
 }
 
+// DeleteSensors mocks base method.
+func (m *MockISensorService) DeleteSensors(ctx context.Context, params *request.DeleteSensorsRequest) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteSensors", ctx, params)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteSensors indicates an expected call of DeleteSensors.
+func (mr *MockISensorServiceMockRecorder) DeleteSensors(ctx, params interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteSensors", reflect.TypeOf((*MockISensorService)(nil).DeleteSensors), ctx, params)
+}
+
 // GetSensors mocks base method.
 func (m *MockISensorService) GetSensors(ctx context.Context, params *request.GetSensorsRequest) ([]*sqlc.SensorDatum, int64, error) {
 	m.ctrl.T.Helper()
@@ -64,4 +78,18 @@ func (m *MockISensorService) GetSensors(ctx context.Context, params *request.Get
 func (mr *MockISensorServiceMockRecorder) GetSensors(ctx, params interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSensors", reflect.TypeOf((*MockISensorService)(nil).GetSensors), ctx, params)
+}
+
+// UpdateSensors mocks base method.
+func (m *MockISensorService) UpdateSensors(ctx context.Context, params *request.UpdateSensorsRequest) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateSensors", ctx, params)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdateSensors indicates an expected call of UpdateSensors.
+func (mr *MockISensorServiceMockRecorder) UpdateSensors(ctx, params interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateSensors", reflect.TypeOf((*MockISensorService)(nil).UpdateSensors), ctx, params)
 }

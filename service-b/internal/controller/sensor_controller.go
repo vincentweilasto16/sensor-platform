@@ -42,3 +42,43 @@ func (c *SensorController) GetSensors(ctx echo.Context) error {
 
 	return response.RespondSuccessWithPaginator(ctx, res, pagination, "ok")
 }
+
+func (c *SensorController) DeleteSensors(ctx echo.Context) error {
+	// @TODO: prepare the context
+
+	var bodyRequest request.DeleteSensorsRequest
+	if err := request.SetBodyParams(ctx, &bodyRequest); err != nil {
+		return response.RespondError(ctx, err)
+	}
+
+	if err := ctx.Validate(&bodyRequest); err != nil {
+		return response.RespondError(ctx, err)
+	}
+
+	err := c.SensorService.DeleteSensors(ctx.Request().Context(), &bodyRequest)
+	if err != nil {
+		return response.RespondError(ctx, err)
+	}
+
+	return response.RespondSuccess(ctx, nil, "ok")
+}
+
+func (c *SensorController) UpdateSensors(ctx echo.Context) error {
+	// @TODO: prepare the context
+
+	var bodyRequest request.UpdateSensorsRequest
+	if err := request.SetBodyParams(ctx, &bodyRequest); err != nil {
+		return response.RespondError(ctx, err)
+	}
+
+	if err := ctx.Validate(&bodyRequest); err != nil {
+		return response.RespondError(ctx, err)
+	}
+
+	err := c.SensorService.UpdateSensors(ctx.Request().Context(), &bodyRequest)
+	if err != nil {
+		return response.RespondError(ctx, err)
+	}
+
+	return response.RespondSuccess(ctx, nil, "ok")
+}

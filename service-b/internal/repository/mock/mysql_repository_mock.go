@@ -50,18 +50,18 @@ func (mr *MockIMySQLRepositoryMockRecorder) CountSensors(ctx, arg interface{}) *
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CountSensors", reflect.TypeOf((*MockIMySQLRepository)(nil).CountSensors), ctx, arg)
 }
 
-// DeleteSensorData mocks base method.
-func (m *MockIMySQLRepository) DeleteSensorData(ctx context.Context, arg sqlc.DeleteSensorDataParams) error {
+// DeleteSensors mocks base method.
+func (m *MockIMySQLRepository) DeleteSensors(ctx context.Context, arg sqlc.DeleteSensorsParams) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteSensorData", ctx, arg)
+	ret := m.ctrl.Call(m, "DeleteSensors", ctx, arg)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-// DeleteSensorData indicates an expected call of DeleteSensorData.
-func (mr *MockIMySQLRepositoryMockRecorder) DeleteSensorData(ctx, arg interface{}) *gomock.Call {
+// DeleteSensors indicates an expected call of DeleteSensors.
+func (mr *MockIMySQLRepositoryMockRecorder) DeleteSensors(ctx, arg interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteSensorData", reflect.TypeOf((*MockIMySQLRepository)(nil).DeleteSensorData), ctx, arg)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteSensors", reflect.TypeOf((*MockIMySQLRepository)(nil).DeleteSensors), ctx, arg)
 }
 
 // GetSensors mocks base method.
@@ -93,16 +93,16 @@ func (mr *MockIMySQLRepositoryMockRecorder) InsertSensorData(ctx, arg interface{
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InsertSensorData", reflect.TypeOf((*MockIMySQLRepository)(nil).InsertSensorData), ctx, arg)
 }
 
-// UpdateSensorData mocks base method.
-func (m *MockIMySQLRepository) UpdateSensorData(ctx context.Context, arg sqlc.UpdateSensorDataParams) error {
+// UpdateSensors mocks base method.
+func (m *MockIMySQLRepository) UpdateSensors(ctx context.Context, arg sqlc.UpdateSensorsParams) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UpdateSensorData", ctx, arg)
+	ret := m.ctrl.Call(m, "UpdateSensors", ctx, arg)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-// UpdateSensorData indicates an expected call of UpdateSensorData.
-func (mr *MockIMySQLRepositoryMockRecorder) UpdateSensorData(ctx, arg interface{}) *gomock.Call {
+// UpdateSensors indicates an expected call of UpdateSensors.
+func (mr *MockIMySQLRepositoryMockRecorder) UpdateSensors(ctx, arg interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateSensorData", reflect.TypeOf((*MockIMySQLRepository)(nil).UpdateSensorData), ctx, arg)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateSensors", reflect.TypeOf((*MockIMySQLRepository)(nil).UpdateSensors), ctx, arg)
 }
