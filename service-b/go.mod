@@ -5,20 +5,22 @@ go 1.23.0
 toolchain go1.24.6
 
 require (
-	github.com/davecgh/go-spew v1.1.1
 	github.com/go-sql-driver/mysql v1.9.3
 	github.com/golang-migrate/migrate/v4 v4.18.3
 	github.com/golang/mock v1.6.0
 	github.com/guregu/null v4.0.0+incompatible
 	github.com/joho/godotenv v1.5.1
 	github.com/labstack/echo/v4 v4.13.4
+	github.com/segmentio/kafka-go v0.4.49
 )
 
 require (
 	github.com/gabriel-vasile/mimetype v1.4.8 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
+	github.com/klauspost/compress v1.15.11 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
+	github.com/pierrec/lz4/v4 v4.1.16 // indirect
 )
 
 require (

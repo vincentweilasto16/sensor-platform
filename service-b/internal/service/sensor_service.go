@@ -12,6 +12,7 @@ import (
 //go:generate mockgen -source=./sensor_service.go -destination=./mock/sensor_service_mock.go -package=mock service-b/internal/service ISensorService
 type ISensorService interface {
 	GetSensors(ctx context.Context, params *request.GetSensorsRequest) ([]*entity.SensorDatum, int64, error)
+	CreateSensor(ctx context.Context, params *request.CreateSensorRequest) error
 }
 
 type SensorService struct {
@@ -88,4 +89,19 @@ func (s *SensorService) GetSensors(ctx context.Context, params *request.GetSenso
 	}
 
 	return sensors, total, nil
+}
+
+func (s *SensorService) CreateSensor(ctx context.Context, params *request.CreateSensorRequest) error {
+	err := s.repo.InsertSensorData(ctx, entity.InsertSensorDataParams{
+		SensorType:   params.SensorType,
+		SensorValue:  params.SensorValue,
+		DeviceCode:   params.DeviceCode,
+		DeviceNumber: params.DeviceNumber,
+		Timestamp:    params.Timestamp,
+	})
+	if err != nil {
+		return errors.New(errors.InternalServer, "failed to store sensor")
+	}
+
+	return nil
 }

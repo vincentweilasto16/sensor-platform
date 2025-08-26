@@ -36,6 +36,20 @@ func (m *MockISensorService) EXPECT() *MockISensorServiceMockRecorder {
 	return m.recorder
 }
 
+// CreateSensor mocks base method.
+func (m *MockISensorService) CreateSensor(ctx context.Context, params *request.CreateSensorRequest) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateSensor", ctx, params)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// CreateSensor indicates an expected call of CreateSensor.
+func (mr *MockISensorServiceMockRecorder) CreateSensor(ctx, params interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateSensor", reflect.TypeOf((*MockISensorService)(nil).CreateSensor), ctx, params)
+}
+
 // GetSensors mocks base method.
 func (m *MockISensorService) GetSensors(ctx context.Context, params *request.GetSensorsRequest) ([]*sqlc.SensorDatum, int64, error) {
 	m.ctrl.T.Helper()

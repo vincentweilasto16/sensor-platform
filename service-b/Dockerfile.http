@@ -1,0 +1,31 @@
+FROM golang:1.23-alpine AS builder
+
+# Install git (needed if you use modules from github) and ca-certificates
+RUN apk add --no-cache git ca-certificates
+
+# Set working directory
+WORKDIR /app
+
+# Copy go.mod and go.sum first to leverage Docker cache
+COPY go.mod go.sum ./
+
+# Download dependencies
+RUN go mod download
+
+# Copy the source code
+COPY . .
+
+# Build the binary
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o sensor-service-b-binary ./cmd/main.go
+
+# Final image
+FROM alpine:latest
+RUN apk --no-cache add ca-certificates
+WORKDIR /app
+COPY --from=builder /app/sensor-service-b-binary .
+COPY .env .
+COPY --from=builder /app/database/migrations /app/database/migrations
+EXPOSE 8080
+
+# Run the binary
+CMD ["./sensor-service-b-binary"]
