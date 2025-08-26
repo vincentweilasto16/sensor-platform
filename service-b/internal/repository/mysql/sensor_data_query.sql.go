@@ -19,6 +19,7 @@ WHERE
     AND (? IS NULL OR device_number = ?)
     AND (? IS NULL OR timestamp >= ?)
     AND (? IS NULL OR timestamp <= ?)
+    AND deleted_at IS NULL
 `
 
 type CountSensorsParams struct {
@@ -45,12 +46,14 @@ func (q *Queries) CountSensors(ctx context.Context, arg CountSensorsParams) (int
 }
 
 const deleteSensors = `-- name: DeleteSensors :exec
-DELETE FROM sensor_data
+UPDATE sensor_data
+SET deleted_at = NOW()
 WHERE 
     (? IS NULL OR device_code = ?)
     AND (? IS NULL OR device_number = ?)
     AND (? IS NULL OR timestamp >= ?)
     AND (? IS NULL OR timestamp <= ?)
+    AND deleted_at IS NULL
 `
 
 type DeleteSensorsParams struct {
@@ -82,6 +85,7 @@ WHERE
     AND (? IS NULL OR device_number = ?)
     AND (? IS NULL OR timestamp >= ?)
     AND (? IS NULL OR timestamp <= ?)
+    AND deleted_at IS NULL
 ORDER BY created_at DESC
 LIMIT ? OFFSET ?
 `
@@ -174,6 +178,7 @@ WHERE
     AND (? IS NULL OR device_number = ?)
     AND (? IS NULL OR timestamp >= ?)
     AND (? IS NULL OR timestamp <= ?)
+    AND deleted_at IS NULL
 `
 
 type UpdateSensorsParams struct {
