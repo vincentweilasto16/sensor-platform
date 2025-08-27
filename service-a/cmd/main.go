@@ -14,6 +14,7 @@ import (
 
 	"service-a/internal/config"
 	"service-a/internal/controller"
+	"service-a/internal/generator"
 	messaging "service-a/internal/messaging/kafka"
 	"service-a/internal/router"
 	"service-a/internal/service"
@@ -26,10 +27,9 @@ func main() {
 		log.Println("⚠️  No .env file found, using system environment variables")
 	}
 
-	// Load App Config from env
+	// Load configs
 	appConfig := config.LoadAppConfig()
-
-	// Load Kafka config from env
+	sensorGeneratorConfig := config.LoadSensorGeneratorConfig()
 	kafkaConfig, err := config.LoadKafkaConfig()
 	if err != nil {
 		log.Fatalf("❌ Failed to get kafka config: %v", err)
@@ -38,8 +38,11 @@ func main() {
 	// Initialize kafka producer
 	kafkaProducer := messaging.NewKafkaProducer(kafkaConfig)
 
+	// Init generator with default frequency and start it
+	gen := generator.NewGenerator(sensorGeneratorConfig.Frequency, kafkaProducer)
+
 	// Initialize services
-	sensorService := service.NewSensorService(kafkaProducer)
+	sensorService := service.NewSensorService(kafkaProducer, gen, sensorGeneratorConfig)
 
 	// Initialize controllers
 	sensorController := controller.NewSensorController(sensorService)

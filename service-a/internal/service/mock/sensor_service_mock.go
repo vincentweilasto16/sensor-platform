@@ -35,16 +35,58 @@ func (m *MockISensorService) EXPECT() *MockISensorServiceMockRecorder {
 	return m.recorder
 }
 
-// GenerateSensor mocks base method.
-func (m *MockISensorService) GenerateSensor(ctx context.Context, params *request.GenerateSensorRequest) error {
+// GenerateSensorManual mocks base method.
+func (m *MockISensorService) GenerateSensorManual(ctx context.Context, params *request.GenerateSensorManualRequest) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GenerateSensor", ctx, params)
+	ret := m.ctrl.Call(m, "GenerateSensorManual", ctx, params)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-// GenerateSensor indicates an expected call of GenerateSensor.
-func (mr *MockISensorServiceMockRecorder) GenerateSensor(ctx, params interface{}) *gomock.Call {
+// GenerateSensorManual indicates an expected call of GenerateSensorManual.
+func (mr *MockISensorServiceMockRecorder) GenerateSensorManual(ctx, params interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GenerateSensor", reflect.TypeOf((*MockISensorService)(nil).GenerateSensor), ctx, params)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GenerateSensorManual", reflect.TypeOf((*MockISensorService)(nil).GenerateSensorManual), ctx, params)
+}
+
+// StartSensorGenerator mocks base method.
+func (m *MockISensorService) StartSensorGenerator(ctx context.Context) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "StartSensorGenerator", ctx)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// StartSensorGenerator indicates an expected call of StartSensorGenerator.
+func (mr *MockISensorServiceMockRecorder) StartSensorGenerator(ctx interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StartSensorGenerator", reflect.TypeOf((*MockISensorService)(nil).StartSensorGenerator), ctx)
+}
+
+// StopSensorGenerator mocks base method.
+func (m *MockISensorService) StopSensorGenerator(ctx context.Context) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "StopSensorGenerator", ctx)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// StopSensorGenerator indicates an expected call of StopSensorGenerator.
+func (mr *MockISensorServiceMockRecorder) StopSensorGenerator(ctx interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StopSensorGenerator", reflect.TypeOf((*MockISensorService)(nil).StopSensorGenerator), ctx)
+}
+
+// UpdateGenerateSensorFrequency mocks base method.
+func (m *MockISensorService) UpdateGenerateSensorFrequency(ctx context.Context, params *request.UpdateGenerateSensorFrequencyRequest) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateGenerateSensorFrequency", ctx, params)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdateGenerateSensorFrequency indicates an expected call of UpdateGenerateSensorFrequency.
+func (mr *MockISensorServiceMockRecorder) UpdateGenerateSensorFrequency(ctx, params interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateGenerateSensorFrequency", reflect.TypeOf((*MockISensorService)(nil).UpdateGenerateSensorFrequency), ctx, params)
 }
