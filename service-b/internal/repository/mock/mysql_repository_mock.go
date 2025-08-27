@@ -79,6 +79,21 @@ func (mr *MockIMySQLRepositoryMockRecorder) GetSensors(ctx, arg interface{}) *go
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSensors", reflect.TypeOf((*MockIMySQLRepository)(nil).GetSensors), ctx, arg)
 }
 
+// GetUserByUsername mocks base method.
+func (m *MockIMySQLRepository) GetUserByUsername(ctx context.Context, username string) (sqlc.User, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetUserByUsername", ctx, username)
+	ret0, _ := ret[0].(sqlc.User)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetUserByUsername indicates an expected call of GetUserByUsername.
+func (mr *MockIMySQLRepositoryMockRecorder) GetUserByUsername(ctx, username interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserByUsername", reflect.TypeOf((*MockIMySQLRepository)(nil).GetUserByUsername), ctx, username)
+}
+
 // InsertSensorData mocks base method.
 func (m *MockIMySQLRepository) InsertSensorData(ctx context.Context, arg sqlc.InsertSensorDataParams) error {
 	m.ctrl.T.Helper()
@@ -91,6 +106,20 @@ func (m *MockIMySQLRepository) InsertSensorData(ctx context.Context, arg sqlc.In
 func (mr *MockIMySQLRepositoryMockRecorder) InsertSensorData(ctx, arg interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InsertSensorData", reflect.TypeOf((*MockIMySQLRepository)(nil).InsertSensorData), ctx, arg)
+}
+
+// InsertUser mocks base method.
+func (m *MockIMySQLRepository) InsertUser(ctx context.Context, arg sqlc.InsertUserParams) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "InsertUser", ctx, arg)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// InsertUser indicates an expected call of InsertUser.
+func (mr *MockIMySQLRepositoryMockRecorder) InsertUser(ctx, arg interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InsertUser", reflect.TypeOf((*MockIMySQLRepository)(nil).InsertUser), ctx, arg)
 }
 
 // UpdateSensors mocks base method.

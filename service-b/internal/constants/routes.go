@@ -7,4 +7,5 @@ const (
 
 	// routes base path
 	SensorBasePath = "/sensors"
+	AuthBasePath   = "/auth"
 )

@@ -29,20 +29,14 @@ func main() {
 		log.Println("⚠️  No .env file found, using system environment variables")
 	}
 
-	// Load App Config from env
+	// Load configs
 	appConfig := config.LoadAppConfig()
-
-	// Load DB config from env
 	databaseConfig := config.LoadDatabaseConfig()
-
-	// Load Kafka config from env
+	jwtConfig := config.LoadJWTConfig()
 	kafkaConfig, err := config.LoadKafkaConfig()
 	if err != nil {
-		log.Fatalf("❌ Failed to get kafka config: %v", err)
+		log.Fatalf("❌ Failed to get Kafka config: %v", err)
 	}
-
-	// Initialize kafka consumer
-	kafkaConsumer := messaging.NewKafkaConsumer(kafkaConfig)
 
 	// Connect to DB
 	db, err := config.ConnectDB(databaseConfig)
@@ -59,12 +53,15 @@ func main() {
 
 	// Initialize services
 	sensorService := service.NewSensorService(dbRepo)
+	authService := service.NewAuthService(dbRepo, jwtConfig)
 
 	// Initialize controllers
 	sensorController := controller.NewSensorController(sensorService)
+	authController := controller.NewAuthController(authService)
 
 	ctrl := &controller.Controllers{
 		SensorController: sensorController,
+		AuthController:   authController,
 	}
 
 	// Create Echo instance
@@ -74,9 +71,10 @@ func main() {
 	e.Validator = validator.New()
 
 	// Setup Echo router
-	router.NewRouter(e, ctrl)
+	router.NewRouter(e, ctrl, jwtConfig)
 
-	// Initialize Kafka consumer handler
+	// Initialize kafka consumer and the handler
+	kafkaConsumer := messaging.NewKafkaConsumer(kafkaConfig)
 	sensorHandler := kafka.NewSensorHandler(sensorService)
 
 	// Listen to Kafka messages in a goroutine
