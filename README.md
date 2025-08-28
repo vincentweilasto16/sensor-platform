@@ -15,8 +15,8 @@ It is designed to generate, receive, process, and store sensor data, while expos
 3. [Process Flow](#process-flow)  
 4. [Tech Stack](#tech-stack)  
 5. [Prerequisites](#prerequisites)  
-6. [Database Architecture](#database-architecture)  
-7. [Setup & Run](#setup-run)  
+6. [Database Entity Relationship Diagram (ERD)](#database-entity-relationship-diagram)  
+7. [Setup & Run](#setup--run)  
 8. [API Contract](#api-contract)  
 9. [Limitations & Future Improvements](#limitations--future-improvements)
 
@@ -132,13 +132,85 @@ Before running the application, make sure you have the following installed:
 
 ---
 
-## 🗄 Database Architecture Diagram
+## Database Entity Relationship Diagram (ERD)
 
 
 The following Entity-Relationship Diagram (ERD) illustrates the database structure for sensor platform spesifically on **Microservice B**:
 
-// put the image in here //
+![Sensor ERD](docs/erd/sensor_erd.svg)
 
+### Table Structure Overview
+
+**sensor_data Table (Blue)**
+- *Purpose*: Stores IoT sensor readings and measurements
+- *Primary Key*: id (BIGINT) - uniquely identifies each sensor reading
+- *Core Data*: Contains sensor type, measured values, and device identification
+- *Key Fields*:
+  - sensor_type: What kind of sensor (temperature, humidity, etc.)
+  - sensor_value: The actual measurement reading
+  - device_code & device_number: Identify which physical device sent the data
+  - timestamp: When the reading was taken
+
+
+| Column | Data Type | Constraints | Description |
+|--------|-----------|-------------|-------------|
+| `id` | BIGINT | PRIMARY KEY, AUTO_INCREMENT | Unique identifier for each sensor reading |
+| `sensor_type` | VARCHAR(50) | NOT NULL | Type of sensor (e.g., temperature, humidity, pressure) |
+| `sensor_value` | DOUBLE | NOT NULL | The actual measurement value from the sensor |
+| `device_code` | VARCHAR(20) | NOT NULL | Alphanumeric code identifying the device |
+| `device_number` | INT | NOT NULL | Numeric identifier for the device |
+| `timestamp` | TIMESTAMP | NOT NULL, DEFAULT CURRENT_TIMESTAMP | When the sensor reading was recorded |
+| `created_at` | TIMESTAMP | NOT NULL, DEFAULT CURRENT_TIMESTAMP | Record creation timestamp |
+| `updated_at` | TIMESTAMP | NOT NULL, DEFAULT CURRENT_TIMESTAMP ON UPDATE | Last modification timestamp |
+| `deleted_at` | TIMESTAMP | NULL | Soft delete timestamp (NULL = active record) |
+
+
+**users Table (Green)**
+- *Purpose*: Manages user authentication and access control
+- *Primary Key*: id (INT) - uniquely identifies each user
+- *Core Data*: User credentials and role-based permissions
+- *Key Fields*:
+  - username: Unique login identifier
+  - password: Encrypted authentication credential
+  - role: Access level (admin or regular user)
+
+| Column | Data Type | Constraints | Description |
+|--------|-----------|-------------|-------------|
+| `id` | INT | PRIMARY KEY, AUTO_INCREMENT | Unique identifier for each user |
+| `username` | VARCHAR(50) | NOT NULL, UNIQUE | User login identifier |
+| `password` | VARCHAR(255) | NOT NULL | Encrypted password hash |
+| `role` | ENUM('admin', 'user') | NOT NULL, DEFAULT 'user' | User access level |
+| `created_at` | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | Account creation timestamp |
+| `updated_at` | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP ON UPDATE | Last profile update timestamp |
+| `deleted_at` | TIMESTAMP | NULL | Soft delete timestamp (NULL = active account) |
+
+
+### Key Features
+
+**🔐 Security & Access Control**
+- **Role-based permissions**: Users can be either 'admin' or 'user'
+- **Unique usernames**: Prevents duplicate accounts
+- **Password encryption**: Stored as hashed values for security
+
+**📈 Data Integrity**
+- **Primary keys**: Each table has a unique identifier
+- **NOT NULL constraints**: Critical fields cannot be empty
+- **Auto-increment**: Automatic ID generation for new records
+
+**🕒 Audit Trail**
+Both tables implement comprehensive audit logging:
+- **created_at**: Tracks when records are first added
+- **updated_at**: Automatically updates when records are modified
+- **deleted_at**: Implements soft delete (records marked as deleted but not physically removed)
+
+**📡 IoT Data Management**
+The sensor_data table is optimized for high-volume IoT data:
+- **BIGINT primary key**: Supports billions of sensor readings
+- **Device identification**: Dual identifiers (code + number) for flexible device management
+- **Flexible sensor types**: VARCHAR field accommodates various sensor categories
+- **Precise timestamps**: Ensures accurate temporal data tracking
+
+*This ERD represents the current database structure. Future iterations may include additional tables and relationships to support enhanced functionality.*
 ---
 
 ## 🚀 Setup & Run
