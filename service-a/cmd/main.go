@@ -39,7 +39,7 @@ func main() {
 	kafkaProducer := messaging.NewKafkaProducer(kafkaConfig)
 
 	// Init generator with default frequency and start it
-	gen := generator.NewGenerator(sensorGeneratorConfig.Frequency, kafkaProducer)
+	gen := generator.NewGenerator(sensorGeneratorConfig, kafkaProducer)
 
 	// Initialize services
 	sensorService := service.NewSensorService(kafkaProducer, gen, sensorGeneratorConfig)

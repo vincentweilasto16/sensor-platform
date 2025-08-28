@@ -8,29 +8,30 @@ import (
 	"sync"
 	"time"
 
+	"service-a/internal/config"
 	"service-a/internal/constants"
 	"service-a/internal/domain"
 	"service-a/internal/messaging"
 )
 
 type Generator struct {
-	mu        sync.Mutex
-	frequency time.Duration
-	ticker    *time.Ticker
-	broker    messaging.Broker
-	stop      chan struct{}
-	update    chan time.Duration
-	running   bool
+	mu                    sync.Mutex
+	ticker                *time.Ticker
+	broker                messaging.Broker
+	sensorGeneratorConfig *config.SensorGeneratorConfig
+	stop                  chan struct{}
+	update                chan time.Duration
+	running               bool
 }
 
 var rnd = rand.New(rand.NewSource(time.Now().UnixNano()))
 
-func NewGenerator(freq time.Duration, broker messaging.Broker) *Generator {
+func NewGenerator(sensorGeneratorConfig *config.SensorGeneratorConfig, broker messaging.Broker) *Generator {
 	return &Generator{
-		frequency: freq,
-		broker:    broker,
-		stop:      make(chan struct{}),
-		update:    make(chan time.Duration),
+		sensorGeneratorConfig: sensorGeneratorConfig,
+		broker:                broker,
+		stop:                  make(chan struct{}),
+		update:                make(chan time.Duration),
 	}
 }
 
@@ -42,7 +43,7 @@ func (g *Generator) Start() {
 		return
 	}
 	g.running = true
-	g.ticker = time.NewTicker(g.frequency)
+	g.ticker = time.NewTicker(g.sensorGeneratorConfig.Frequency)
 	g.mu.Unlock()
 
 	go func() {
@@ -58,7 +59,7 @@ func (g *Generator) Start() {
 			case newFreq := <-g.update:
 				g.mu.Lock()
 				g.ticker.Stop()
-				g.frequency = newFreq
+				g.sensorGeneratorConfig.Frequency = newFreq
 				g.ticker = time.NewTicker(newFreq)
 				g.mu.Unlock()
 				fmt.Println("⏱ frequency updated to:", newFreq)
@@ -92,7 +93,7 @@ func (g *Generator) UpdateFrequency(newFreq time.Duration) {
 	default:
 		// if generator not running, just update freq
 		g.mu.Lock()
-		g.frequency = newFreq
+		g.sensorGeneratorConfig.Frequency = newFreq
 		if g.ticker != nil {
 			g.ticker.Stop()
 			g.ticker = time.NewTicker(newFreq)
@@ -104,7 +105,12 @@ func (g *Generator) UpdateFrequency(newFreq time.Duration) {
 
 // generateSensorData remains the same
 func (g *Generator) generateSensorData() domain.SensorData {
-	sType := constants.SensorTypes[rnd.Intn(len(constants.SensorTypes))]
+	// Use g.SensorType if set, otherwise pick random
+	sType := g.sensorGeneratorConfig.SensorType
+	if sType == "" {
+		sType = constants.SensorTypes[rnd.Intn(len(constants.SensorTypes))]
+	}
+
 	return domain.SensorData{
 		SensorType:   sType,
 		SensorValue:  setRandomSensorValueByType(sType),

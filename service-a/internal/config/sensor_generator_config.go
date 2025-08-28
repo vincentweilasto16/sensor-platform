@@ -7,8 +7,9 @@ import (
 )
 
 type SensorGeneratorConfig struct {
-	Frequency time.Duration
-	Enabled   bool
+	Frequency  time.Duration
+	Enabled    bool
+	SensorType string
 }
 
 func LoadSensorGeneratorConfig() *SensorGeneratorConfig {
@@ -24,8 +25,14 @@ func LoadSensorGeneratorConfig() *SensorGeneratorConfig {
 		freq = 5 * time.Second
 	}
 
+	sensorType := os.Getenv("SENSOR_TYPE")
+	if sensorType == "" {
+		sensorType = ""
+	}
+
 	return &SensorGeneratorConfig{
-		Frequency: freq,
-		Enabled:   os.Getenv("SENSOR_GENERATOR_ENABLED") == "true",
+		Frequency:  freq,
+		Enabled:    os.Getenv("SENSOR_GENERATOR_ENABLED") == "true",
+		SensorType: sensorType,
 	}
 }
