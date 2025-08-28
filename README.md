@@ -1,5 +1,6 @@
 # 🛰️ Sensor Platform Backend
 
+
 This project is a backend system for processing data streams from multiple sensors and human inputs.  
 The system is built using **Go (Echo framework)**, **MySQL**, and follows a **microservices architecture**.  
 It is designed to generate, receive, process, and store sensor data, while exposing REST APIs for analytics and management.
@@ -7,6 +8,7 @@ It is designed to generate, receive, process, and store sensor data, while expos
 ---
 
 ## 📋 Table of Contents
+
 
 1. [Project Scopes](#project-scopes)  
 2. [Assumptions](#assumptions)  
@@ -21,6 +23,7 @@ It is designed to generate, receive, process, and store sensor data, while expos
 ---
 
 ## 📍 Project Scopes 
+
 
 The project will deliver the following:  
 
@@ -56,6 +59,7 @@ The project will deliver the following:
 
 ## ⚡ Assumptions  
 
+
 - Sensors are simulated and not connected to real hardware.  
 - Device code will be randomly generated from A–Z.  
 - Device number from sensor data will be randomly generated in the range of 1–1000 and cannot be zero.  
@@ -84,6 +88,7 @@ The project will deliver the following:
 
 ## 🛠 Tech Stack
 
+
 ### Core
 - [Go](https://golang.org/) `v1.23.0` – Main programming language
 - [Echo](https://echo.labstack.com/) – Web framework for building REST APIs
@@ -110,22 +115,25 @@ The project will deliver the following:
 
 ---
 
-## 📦 Prerequisites
 
-Before running the application, ensure you have:
+## 📦 Prerequisites  
 
-- [Go](https://go.dev/) >= 1.23.0
-- [PostgreSQL](https://www.postgresql.org/) >= v16  
-  (Can run locally or via Docker)
-- [golang-migrate CLI](https://github.com/golang-migrate/migrate)
-- [sqlc CLI](https://sqlc.dev/)
-- [DBeaver](https://dbeaver.io/) (for database management)
-- Git
-- Docker & Docker Compose
+
+Before running the application, make sure you have the following installed:
+
+- [Go](https://go.dev/) >= 1.23.0  
+- [Docker](https://www.docker.com/) & [Docker Compose](https://docs.docker.com/compose/)  
+  (used to run MySQL, Kafka, and Zookeeper — no local installation required)  
+- [golang-migrate CLI](https://github.com/golang-migrate/migrate) (for database migrations)  
+- [sqlc CLI](https://sqlc.dev/) (for generating type-safe Go code from SQL)  
+- [Git](https://git-scm.com/) (for version control)  
+- [Postman](https://www.postman.com/) (optional, for API testing)  
+- [DBeaver](https://dbeaver.io/) (optional, for database management)  
 
 ---
 
 ## 🗄 Database Architecture Diagram
+
 
 The following Entity-Relationship Diagram (ERD) illustrates the database structure for sensor platform spesifically on **Microservice B**:
 
