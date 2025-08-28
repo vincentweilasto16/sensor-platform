@@ -44,12 +44,20 @@ func (g *Generator) Start() {
 	}
 	g.running = true
 	g.ticker = time.NewTicker(g.sensorGeneratorConfig.Frequency)
+	fmt.Println("⏱ Generator started with frequency:", g.sensorGeneratorConfig.Frequency)
 	g.mu.Unlock()
 
 	go func() {
+		var lastTick time.Time
 		for {
 			select {
 			case <-g.ticker.C:
+				now := time.Now()
+				if !lastTick.IsZero() {
+					fmt.Println("⏲ Interval since last tick:", now.Sub(lastTick))
+				}
+				lastTick = now
+
 				data := g.generateSensorData()
 				if err := g.publishSensor(data); err != nil {
 					fmt.Println("❌ failed to publish:", err)

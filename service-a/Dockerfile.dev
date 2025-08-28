@@ -1,0 +1,35 @@
+FROM golang:1.23-alpine AS builder
+
+# Install git and ca-certificates (needed for dependencies)
+RUN apk add --no-cache git ca-certificates bash
+
+# Set working directory
+WORKDIR /app
+
+# Copy go.mod and go.sum first to cache deps
+COPY go.mod go.sum ./
+RUN go mod download
+
+# Copy the source code
+COPY . .
+
+# Build the binary
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o service-a ./cmd/main.go
+
+# Final image
+FROM alpine:latest
+RUN apk add --no-cache bash netcat-openbsd
+WORKDIR /app
+
+COPY --from=builder /app/service-a .
+COPY .env .env
+COPY wait-for-it.sh ./wait-for-it.sh
+COPY entrypoint.sh ./entrypoint.sh
+
+# Make both executable
+RUN chmod +x ./wait-for-it.sh ./entrypoint.sh
+
+EXPOSE 8081
+
+# Run the binary
+ENTRYPOINT ["./entrypoint.sh"]
