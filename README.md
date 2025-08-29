@@ -323,116 +323,264 @@ The sensor_data table is optimized for high-volume IoT data:
 
 ## 📜 API Contract
 
-1. **Get User By ID**
-   Endpoint:
+### Service B
 
-   ```bash
-   GET /api/v1/users/:id
-   ```
+1. **Sensor Service (Main Service)**
+   
+   1. **Get Sensors**
+      Endpoint:
+      ```bash
+      GET api/v1/sensors
+      ```
 
-   Response (Success - 200 OK):
+      Authorization Header:
+      ```bash
+      Bearer <token>
+      ```
+   
+      Query Params:
+      
+      | Key | Value | Data Type | Description |
+      |--------|-----------|-------------|-------------|
+      | `device_code` | A | string | ID1, optional |
+      | `device_number` | 1 | int | ID2, optional |
+      | `start_time` | 2025-08-28T15:51:00Z | time.Time | optional |
+      | `end_time` | 2025-08-28T15:51:59Z | time.Time | optional |
+      | `limit` | 10 | int | required, min=1 |
+      | `page` | 1 | int | required, min=1 |
+   
+   
+      Response (Success - 200 OK):
+      ```bash
+      {
+       "status": "success",
+       "message": "ok",
+       "data": [
+           {
+               "id": 4,
+               "sensor_type": "humidity",
+               "sensor_value": 55.8,
+               "device_code": "B",
+               "device_number": 1,
+               "timestamp": "2025-08-24T01:22:48Z",
+               "created_at": "2025-08-24T01:22:48Z",
+               "updated_at": "2025-08-24T02:40:31Z",
+               "deleted_at": null
+           },
+           ....
+       ],
+       "paginator": {
+           "total_items": 3,
+           "total_pages": 1,
+           "item_from": 1,
+           "item_to": 3,
+           "current_page": 1,
+           "limit": 10
+       }
+      }
+      ```
 
-   ```bash
-   {
-    "data": {
-        "id": "67e1e382-7122-4e77-b47f-f4e940cbf385",
-        "name": "Andi Wijaya",
-        "email": "andi.wijaya@example.com",
-        "balance": 1500000,
-        "created_at": "2025-08-15T17:17:21.515714+07:00",
-        "updated_at": "2025-08-15T17:17:21.515714+07:00",
-        "deleted_at": null
-    },
-    "meta": {
-        "status": 200,
-        "message": "ok"
-    }
-   }
-   ```
+   2. **Update Sensors**
+      Endpoint:
+      ```bash
+      PUT api/v1/sensors
+      ```
+  
+      Authorization Header:
+      ```bash
+      Bearer <token>
+      ```
+   
+      Request Body:
+      ```bash
+      {
+          "criteria": {
+              "device_code": "I",
+              "device_number": 1,
+              "start_time": "2025-08-28T15:51:00Z",
+              "end_time": "2025-08-28T15:51:59Z"
+          },
+          "changes": {
+              "sensor_value": 33,
+              "sensor_type": "humidity",
+              "timestamp": "2009-05-22T10:27:00Z"
+          }
+      } 
+      ```
+   
+      Response (Success - 200 OK):
+      ```bash
+      {
+          "status": "success",
+          "message": "ok"
+      }
+      ```
 
-   Response (Failure - User Not Found - 404 Not Found):
+      Response (Failure - No Filter Provided - 400 Bad Request):
+      ```bash
+      {
+          "status": "error",
+          "message": "at least one filter is required for update"
+      }
+      ```
 
-   ```bash
-    {
-        "data": null,
-        "errors": [
-            {
-                "code": "NOT_FOUND",
-                "message": "user not found"
-            }
-        ],
-        "meta": {
-            "status": 404,
-            "message": "user not found"
-        }
-    }
-   ```
+      Response (Failure - No Changes Data Provided - 400 Bad Request):
+      ```bash
+      {
+          "status": "error",
+          "message": "at least one field to update must be provided"
+      }
+      ```
+      
+   3. **Delete Sensors**
+      Endpoint:
+      ```bash
+      DELETE api/v1/sensors
+      ```
+  
+      Authorization Header:
+      ```bash
+      Bearer <token>
+      ```
+   
+      Request Body:
+      ```bash
+      {
+        "device_code": "I",
+        "device_number": 1,
+        "start_time": "2025-08-28T15:51:00Z",
+        "end_time": "2025-08-28T15:51:59Z"
+      } 
+      ```
+   
+      Response (Success - 200 OK):
+      ```bash
+      {
+          "status": "success",
+          "message": "ok"
+      }
+      ```
 
-2. **Withdraw**
-   Endpoint:
+      Response (Failure - No Filter Provided - 400 Bad Request):
+      ```bash
+      {
+          "status": "error",
+          "message": "at least one filter is required for deletion"
+      }
+      ```
 
-   ```bash
-   POST /api/v1/transactions/withdraw
-   ```
+      Response (Failure - Start Time Greater Than End Time - 400 Bad Request):
+      ```bash
+      {
+          "status": "error",
+          "message": "start time cannot be greater than end time"
+      }
+      ```
 
-   Request Body:
+2. **Auth Service (Simplfy Only For Authentication & Authorization)**
 
-   ```bash
-   {
-    "user_id": "a440fd30-6894-4e93-b041-2f577c09d002",
-    "amount": 20000
-   }
-   ```
+   1. **Register**
+      Endpoint:
+      ```bash
+      POST api/v1/auth/register
+      ```
+   
+      Request Body:
+      ```bash
+      {
+        "username": "admin",
+        "password": "admin",
+        "role": "admin"        // can be admin or user
+      }
+      ```
+   
+      Response (Success - 200 OK):
+      ```bash
+      {
+          "status": "success",
+          "message": "ok"
+      }
+      ```
 
-   Response (Success - 200 OK):
+   2. **Login**
+      Endpoint:
+      ```bash
+      POST api/v1/auth/login
+      ```
+   
+      Request Body:
+      ```bash
+      {
+        "username": "user",
+        "password": "user"
+      }
+      ```
+   
+      Response (Success - 200 OK):
+      ```bash
+      {
+          "status": "success",
+          "message": "ok",
+          "data": {
+              "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTY0NDU2NjksInJvbGUiOiJ1c2VyIiwidXNlcl9pZCI6MX0.HY-moLeuY7r704tLL-LwEhrGbGKvBU7KpcdTX-_jezk",
+              "expires_at": 1756445669
+          }
+      }
+      ```
 
-   ```bash
-   {
-        "data": {
-            "message": "Withdrawal successful"
-        },
-        "meta": {
-            "status": 200,
-            "message": "OK"
-        }
-   }
-   ```
+### Service A
 
-   Response (Failure - Insufficient Balance - 422 Unprocessable entity):
+1. **Sensor Service**
 
-   ```bash
-    {
-        "data": null,
-        "errors": [
-            {
-                "code": "UNPROCESSABLE_ENTITY",
-                "message": "insuficient balance"
-            }
-        ],
-        "meta": {
-            "status": 422,
-            "message": "insuficient balance"
-        }
-    }
-   ```
+   1. **Start Sensor Generator**
+      Endpoint:
+      ```bash
+      POST api/v1/sensors/generate/start
+      ```
+   
+      Response (Success - 200 OK):
+      ```bash
+      {
+          "status": "success",
+          "message": "sensor generator started"
+      }
+      ```
 
-   Response (Failure - User Not Found - 404 Not Found):
+   2. **Stop Sensor Generator**
+      Endpoint:
+      ```bash
+      POST api/v1/sensors/generate/stop
+      ```
+   
+      Response (Success - 200 OK):
+      ```bash
+      {
+          "status": "success",
+          "message": "sensor generator stopped"
+      }
+      ```
 
-   ```bash
-    {
-        "data": null,
-        "errors": [
-            {
-                "code": "NOT_FOUND",
-                "message": "user not found"
-            }
-        ],
-        "meta": {
-            "status": 404,
-            "message": "user not found"
-        }
-    }
-   ```
+   3. **Update Generate Sensor Frequency**
+      Endpoint:
+      ```bash
+      PUT api/v1/sensors/generate/frequency
+      ```
+  
+      Request Body:
+      ```bash
+      {
+        "frequency": 25   // in seconds
+      }
+      ```
+   
+      Response (Success - 200 OK):
+      ```bash
+      {
+          "status": "success",
+          "message": "ok"
+      }
+      ```
+
 
 ---
 
