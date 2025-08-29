@@ -1,0 +1,171 @@
+<svg width="1400" height="700" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8f9fa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e9ecef;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#00000020"/>
+    </filter>
+    <marker id="arrowhead" markerWidth="12" markerHeight="8" refX="12" refY="4" orient="auto">
+      <polygon points="0 0, 12 4, 0 8" fill="#2c3e50"/>
+    </marker>
+  </defs>
+  
+  <rect width="1400" height="700" fill="url(#bgGradient)"/>
+  
+  <!-- Title -->
+  <text x="700" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#2c3e50">User Access and Data Management Process</text>
+  
+  <!-- Step 1: Registration -->
+  <g transform="translate(50, 80)">
+    <rect x="0" y="0" width="200" height="120" fill="#3498db" stroke="#2980b9" stroke-width="2" rx="8" filter="url(#shadow)"/>
+    <text x="100" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">👤 Create Account</text>
+    <text x="100" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">Sign Up Process</text>
+    <text x="100" y="60" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">• Choose username</text>
+    <text x="100" y="75" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">• Set password</text>
+    <text x="100" y="90" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">• Select role (Admin/User)</text>
+  </g>
+  
+  <!-- Step 2: Login -->
+  <g transform="translate(300, 80)">
+    <rect x="0" y="0" width="200" height="120" fill="#e74c3c" stroke="#c0392b" stroke-width="2" rx="8" filter="url(#shadow)"/>
+    <text x="100" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">🔐 Sign In</text>
+    <text x="100" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">Login Process</text>
+    <text x="100" y="60" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">• Enter username</text>
+    <text x="100" y="75" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">• Enter password</text>
+    <text x="100" y="90" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">• Get access key</text>
+  </g>
+  
+  <!-- Step 3: Permission Check -->
+  <g transform="translate(550, 80)">
+    <rect x="0" y="0" width="200" height="120" fill="#f39c12" stroke="#d68910" stroke-width="2" rx="8" filter="url(#shadow)"/>
+    <text x="100" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">🛡️ Access Control</text>
+    <text x="100" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">Permission Check</text>
+    
+    <rect x="10" y="55" width="80" height="30" fill="#d68910" rx="4"/>
+    <text x="50" y="67" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="white">👑 ADMIN</text>
+    <text x="50" y="78" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="white">All Access</text>
+    
+    <rect x="110" y="55" width="80" height="30" fill="#d68910" rx="4"/>
+    <text x="150" y="67" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="white">👤 USER</text>
+    <text x="150" y="78" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="white">Limited Access</text>
+  </g>
+  
+  <!-- Data Operations -->
+  <g transform="translate(150, 280)">
+    <!-- View Operation -->
+    <rect x="0" y="0" width="180" height="100" fill="#27ae60" stroke="#229954" stroke-width="2" rx="8" filter="url(#shadow)"/>
+    <text x="90" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">📊 View Data</text>
+    <text x="90" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">Browse sensor readings</text>
+    <text x="90" y="55" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">• Search by device code</text>
+    <text x="90" y="70" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">• Filter by date range</text>
+    <text x="90" y="85" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">• Page through results</text>
+    
+    <text x="90" y="-10" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#27ae60" font-weight="bold">👑 Admin ✓ | 👤 User ✓</text>
+  </g>
+  
+  <!-- Update Operation -->
+  <g transform="translate(380, 280)">
+    <rect x="0" y="0" width="180" height="100" fill="#f39c12" stroke="#d68910" stroke-width="2" rx="8" filter="url(#shadow)"/>
+    <text x="90" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">✏️ Edit Data</text>
+    <text x="90" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">Modify sensor readings</text>
+    <text x="90" y="55" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">• Find specific records</text>
+    <text x="90" y="70" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">• Update values</text>
+    <text x="90" y="85" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">• Save changes</text>
+    
+    <text x="90" y="-10" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#f39c12" font-weight="bold">👑 Admin ✓ | 👤 User ✓</text>
+  </g>
+  
+  <!-- Delete Operation -->
+  <g transform="translate(610, 280)">
+    <rect x="0" y="0" width="180" height="100" fill="#e74c3c" stroke="#c0392b" stroke-width="2" rx="8" filter="url(#shadow)"/>
+    <text x="90" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">🗑️ Remove Data</text>
+    <text x="90" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">Delete sensor readings</text>
+    <text x="90" y="55" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">• Find specific records</text>
+    <text x="90" y="70" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">• Remove permanently</text>
+    <text x="90" y="85" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">• Admin only</text>
+    
+    <text x="90" y="-10" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#e74c3c" font-weight="bold">👑 Admin ✓ | 👤 User ✗</text>
+  </g>
+  
+  <!-- Database Access -->
+  <g transform="translate(950, 450)">
+    <rect x="0" y="0" width="200" height="80" fill="#9b59b6" stroke="#8e44ad" stroke-width="2" rx="8" filter="url(#shadow)"/>
+    <text x="100" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">💾 Data Access</text>
+    <text x="100" y="45" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">Database Operations</text>
+    <text x="100" y="60" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Read • Write • Delete</text>
+  </g>
+  
+  <!-- Flow Arrows -->
+  <path d="M250 140 L300 140" stroke="#3498db" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M500 140 L550 140" stroke="#e74c3c" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Access Control to Operations -->
+  <path d="M650 200 L240 270" stroke="#f39c12" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M650 200 L470 270" stroke="#f39c12" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M650 200 L700 270" stroke="#f39c12" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Operations to Database -->
+  <path d="M330 380 Q650 430 950 490" stroke="#9b59b6" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M560 380 Q750 430 950 490" stroke="#9b59b6" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M700 380 Q850 430 950 490" stroke="#9b59b6" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Authentication Steps -->
+  <circle cx="140" cy="50" r="12" fill="#2c3e50"/>
+  <text x="140" y="54" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">1</text>
+  
+  <circle cx="390" cy="50" r="12" fill="#2c3e50"/>
+  <text x="390" y="54" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">2</text>
+  
+  <circle cx="650" cy="50" r="12" fill="#2c3e50"/>
+  <text x="650" y="54" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">3</text>
+  
+  <!-- Security Info -->
+  <g transform="translate(50, 450)">
+    <rect x="0" y="0" width="500" height="120" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="1" rx="8" filter="url(#shadow)"/>
+    <text x="250" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">🔒 Security and Access Rules</text>
+    
+    <text x="20" y="45" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50" font-weight="bold">Password Protection:</text>
+    <text x="20" y="60" font-family="Arial, sans-serif" font-size="11" fill="#2c3e50">• Passwords are encrypted and stored securely</text>
+    <text x="20" y="75" font-family="Arial, sans-serif" font-size="11" fill="#2c3e50">• Users get a secure access key after login</text>
+    
+    <text x="20" y="100" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50" font-weight="bold">Access Levels:</text>
+    <text x="140" y="100" font-family="Arial, sans-serif" font-size="11" fill="#27ae60">👑 Admin: Can view, edit, and delete</text>
+    <text x="350" y="100" font-family="Arial, sans-serif" font-size="11" fill="#f39c12">👤 User: Can view and edit only</text>
+  </g>
+  
+  <!-- Search Examples -->
+  <g transform="translate(600, 450)">
+    <rect x="0" y="0" width="350" height="120" fill="white" stroke="#bdc3c7" stroke-width="1" rx="8" filter="url(#shadow)"/>
+    <text x="175" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">🔍 Search Examples</text>
+    
+    <text x="20" y="45" font-family="Arial, sans-serif" font-size="11" fill="#2c3e50">📅 <strong>By Date:</strong> Show data from January 1-31, 2024</text>
+    <text x="20" y="60" font-family="Arial, sans-serif" font-size="11" fill="#2c3e50">🏷️ <strong>By Device:</strong> Device code TEMP_01, number 5</text>
+    <text x="20" y="75" font-family="Arial, sans-serif" font-size="11" fill="#2c3e50">🔢 <strong>By Pages:</strong> Show 50 records per page</text>
+    <text x="20" y="90" font-family="Arial, sans-serif" font-size="11" fill="#2c3e50">🎯 <strong>Combined:</strong> Temperature sensors from last month</text>
+  </g>
+  
+  <!-- Process Flow Numbers -->
+  <g transform="translate(140, 220)">
+    <circle cx="0" cy="0" r="15" fill="#2c3e50"/>
+    <text x="0" y="5" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">4</text>
+    <text x="50" y="5" font-family="Arial, sans-serif" font-size="11" fill="#2c3e50" font-weight="bold">Choose Operation</text>
+  </g>
+  
+  <!-- Simple Flow Description -->
+  <g transform="translate(1100, 200)">
+    <rect x="0" y="0" width="250" height="200" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="1" rx="8" filter="url(#shadow)"/>
+    <text x="125" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">📝 Simple Process</text>
+    
+    <text x="20" y="45" font-family="Arial, sans-serif" font-size="11" fill="#2c3e50">1️⃣ Create your account</text>
+    <text x="20" y="65" font-family="Arial, sans-serif" font-size="11" fill="#2c3e50">2️⃣ Sign in to get access</text>
+    <text x="20" y="85" font-family="Arial, sans-serif" font-size="11" fill="#2c3e50">3️⃣ System checks your role</text>
+    <text x="20" y="105" font-family="Arial, sans-serif" font-size="11" fill="#2c3e50">4️⃣ Use available features</text>
+    <text x="20" y="125" font-family="Arial, sans-serif" font-size="11" fill="#2c3e50">5️⃣ Search and filter data</text>
+    <text x="20" y="145" font-family="Arial, sans-serif" font-size="11" fill="#2c3e50">6️⃣ Make changes if allowed</text>
+    
+    <text x="20" y="170" font-family="Arial, sans-serif" font-size="10" fill="#27ae60" font-weight="bold">✓ Easy to use</text>
+    <text x="20" y="185" font-family="Arial, sans-serif" font-size="10" fill="#27ae60" font-weight="bold">✓ Secure access</text>
+  </g>
+</svg>

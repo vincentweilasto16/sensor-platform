@@ -1,0 +1,130 @@
+<svg width="1400" height="600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8f9fa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e9ecef;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#00000020"/>
+    </filter>
+    <marker id="arrowhead" markerWidth="12" markerHeight="8" refX="12" refY="4" orient="auto">
+      <polygon points="0 0, 12 4, 0 8" fill="#2c3e50"/>
+    </marker>
+  </defs>
+  
+  <rect width="1400" height="600" fill="url(#bgGradient)"/>
+  
+  <!-- Title -->
+  <text x="700" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#2c3e50">Sensor Data Collection and Storage Process</text>
+  
+  <!-- Sensor Generators -->
+  <g transform="translate(50, 100)">
+    <!-- Temperature Sensor -->
+    <rect x="0" y="0" width="200" height="100" fill="#3498db" stroke="#2980b9" stroke-width="2" rx="8" filter="url(#shadow)"/>
+    <text x="100" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">🌡️ Temperature Sensor</text>
+    <text x="100" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">Generates readings</text>
+    <text x="100" y="55" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">every few seconds</text>
+    <text x="100" y="75" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">⚙️ Adjustable timing</text>
+  </g>
+  
+  <g transform="translate(50, 220)">
+    <!-- Humidity Sensor -->
+    <rect x="0" y="0" width="200" height="100" fill="#3498db" stroke="#2980b9" stroke-width="2" rx="8" filter="url(#shadow)"/>
+    <text x="100" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">💧 Humidity Sensor</text>
+    <text x="100" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">Generates readings</text>
+    <text x="100" y="55" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">every few seconds</text>
+    <text x="100" y="75" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">⚙️ Adjustable timing</text>
+  </g>
+  
+  <g transform="translate(50, 340)">
+    <!-- Pressure Sensor -->
+    <rect x="0" y="0" width="200" height="100" fill="#3498db" stroke="#2980b9" stroke-width="2" rx="8" filter="url(#shadow)"/>
+    <text x="100" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">🌀 Pressure Sensor</text>
+    <text x="100" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">Generates readings</text>
+    <text x="100" y="55" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">every few seconds</text>
+    <text x="100" y="75" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">⚙️ Adjustable timing</text>
+  </g>
+  
+  <!-- Message Queue -->
+  <g transform="translate(450, 220)">
+    <rect x="0" y="0" width="250" height="120" fill="#f39c12" stroke="#d68910" stroke-width="3" rx="8" filter="url(#shadow)"/>
+    <text x="125" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white">📬 Message Queue</text>
+    <text x="125" y="45" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="white">Data Delivery System</text>
+    
+    <rect x="15" y="60" width="220" height="25" fill="#d68910" rx="4"/>
+    <text x="125" y="75" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">Collects all sensor data</text>
+    
+    <rect x="15" y="90" width="220" height="25" fill="#d68910" rx="4"/>
+    <text x="125" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">Delivers to data processors</text>
+  </g>
+  
+  <!-- Data Processors -->
+  <g transform="translate(850, 140)">
+    <rect x="0" y="0" width="300" height="120" fill="#16a085" stroke="#138d75" stroke-width="2" rx="8" filter="url(#shadow)"/>
+    <text x="150" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">🏭 Data Processing Center</text>
+    <text x="150" y="45" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">Receives and organizes data</text>
+    
+    <rect x="15" y="60" width="270" height="25" fill="#138d75" rx="4"/>
+    <text x="150" y="75" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Multiple processors working together</text>
+    
+    <rect x="15" y="90" width="270" height="25" fill="#0e6b5d" rx="4"/>
+    <text x="150" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Validates and prepares data for storage</text>
+  </g>
+  
+  <!-- Database -->
+  <g transform="translate(950, 320)">
+    <rect x="0" y="0" width="200" height="100" fill="#e74c3c" stroke="#c0392b" stroke-width="2" rx="8" filter="url(#shadow)"/>
+    <text x="100" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">🗄️ Data Storage</text>
+    <text x="100" y="45" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">Database</text>
+    
+    <rect x="15" y="60" width="170" height="15" fill="#c0392b" rx="4"/>
+    <text x="100" y="70" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="white">All sensor readings</text>
+    
+    <rect x="15" y="80" width="170" height="15" fill="#c0392b" rx="4"/>
+    <text x="100" y="90" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="white">User accounts</text>
+  </g>
+  
+  <!-- Flow Arrows -->
+  <path d="M250 150 L450 280" stroke="#3498db" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M250 270 L450 280" stroke="#3498db" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M250 390 L450 280" stroke="#3498db" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <path d="M700 280 L850 200" stroke="#f39c12" stroke-width="4" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M1000 260 L1050 320" stroke="#16a085" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Process Numbers -->
+  <circle cx="350" cy="120" r="15" fill="#2c3e50"/>
+  <text x="350" y="125" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">1</text>
+  
+  <circle cx="575" cy="180" r="15" fill="#2c3e50"/>
+  <text x="575" y="185" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">2</text>
+  
+  <circle cx="775" cy="180" r="15" fill="#2c3e50"/>
+  <text x="775" y="185" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">3</text>
+  
+  <circle cx="1200" cy="280" r="15" fill="#2c3e50"/>
+  <text x="1200" y="285" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">4</text>
+  
+  <!-- Example Data Box -->
+  <g transform="translate(450, 420)">
+    <rect x="0" y="0" width="400" height="100" fill="white" stroke="#bdc3c7" stroke-width="1" rx="8" filter="url(#shadow)"/>
+    <text x="200" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">📋 Example Sensor Reading</text>
+    
+    <text x="20" y="45" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50">Temperature: 25.3°C</text>
+    <text x="20" y="60" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50">Device: TEMP_SENSOR_01</text>
+    <text x="20" y="75" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50">Time: 2024-08-29 10:30:00</text>
+    
+    <text x="220" y="45" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50">Generated every 5 seconds</text>
+    <text x="220" y="60" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50">Sent immediately to queue</text>
+    <text x="220" y="75" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50">Stored safely in database</text>
+  </g>
+  
+  <!-- Summary -->
+  <g transform="translate(950, 460)">
+    <rect x="0" y="0" width="350" height="80" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="1" rx="8" filter="url(#shadow)"/>
+    <text x="175" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">🔄 Continuous Operation</text>
+    <text x="15" y="40" font-family="Arial, sans-serif" font-size="11" fill="#2c3e50">✓ Sensors work 24/7 automatically</text>
+    <text x="15" y="55" font-family="Arial, sans-serif" font-size="11" fill="#2c3e50">✓ Timing can be changed anytime</text>
+    <text x="15" y="70" font-family="Arial, sans-serif" font-size="11" fill="#2c3e50">✓ All data is safely stored</text>
+  </g>
+</svg>
