@@ -79,15 +79,108 @@ The project will deliver the following:
   - Deletion or update cannot be performed without a filter.  
 - For the update feature, only specific fields can be modified: **sensor type**, **sensor value**, and **timestamp**. 
 
+
 ---
+
 
 ## 🧑‍💻 Process Flow
 
-// put the flow in here //
+### 📊 Sensor Data Collection Process
 
-// put the image in here //
+![Sensor Data Collection Process Flow](docs/flowchart/sensor_data_collection_process_flow.svg)
+
+This diagram shows how sensor system automatically collects and stores data from multiple types of sensors. Think of it like a smart monitoring system that never sleeps and continuously tracks environmental conditions.
+
+**How It Works**
+
+🌡️ Smart Sensors Generate Data
+- Multiple sensor devices work independently (temperature, humidity, pressure sensors)
+- Each sensor takes readings automatically every few seconds
+- The timing can be adjusted - you can make sensors read faster or slower as needed
+- Each sensor creates a data record with the measurement, device information, and timestamp
+
+📬 Message Delivery System
+- All sensor data goes through a message queue system (like a smart postal service)
+- This system ensures no data gets lost, even when many sensors send data at the same time
+- It organizes and delivers data efficiently to the processing center
+
+🏭 Data Processing Center
+- Multiple data processors work together to handle incoming sensor information
+- They validate the data to make sure it's correct and complete
+- The system can handle many sensors sending data simultaneously
+- Processes data in real-time as it arrives
+
+🗄️ Secure Data Storage
+- All validated sensor data is stored safely in a database
+- Data is organized so it can be easily searched and retrieved later
+- The storage system keeps track of when each reading was taken
+- Data remains accessible for analysis and reporting
+
+
+### 🔐 User Access and Data Management Process
+
+![User Access And Data Management Process Flow](docs/flowchart/user_access_and_data_management_process_flow.svg)
+
+This diagram explains how people interact with the sensor data - from creating accounts to viewing and managing the collected information. It's designed to be secure while remaining easy to use.
+
+**User Journey**
+
+👤 Account Creation
+- Users start by creating their account with a username and password
+- They choose their access level (Administrator or Regular User)
+- The system automatically encrypts passwords for security
+- Simple signup process focused on getting access quickly
+
+🔐 Secure Sign-In
+- Users log in with their username and password
+- The system verifies their identity against secure stored information
+- After successful login, users receive a secure access key (like a digital badge)
+- This access key allows them to use the system features safely
+
+🛡️ Permission-Based Access
+- The system checks what each user is allowed to do based on their role
+- Administrators have full access to all features
+- Regular Users have limited access for data protection
+- Every action is checked against user permissions automatically
+
+
+**Available Features**
+
+📊 View Sensor Data (Available to: Admin ✓ | User ✓)
+- Browse through all collected sensor readings
+- Search Options: Find data by specific device code, device number, and date ranges
+- Page Navigation: View large amounts of data in manageable chunks
+- Smart Filtering: Combine multiple search criteria to find exactly what you need
+
+✏️ Edit Sensor Data (Available to: Admin ✓ | User ✓)
+- Modify existing sensor readings when corrections are needed
+- Find and Update: Locate specific records and change their values
+- Bulk Changes: Update multiple records that match your search criteria
+- Safe Editing: Changes are tracked and can be audited
+
+🗑️ Remove Sensor Data (Available to: Admin ✓ | User ✗)
+- Delete sensor readings that are no longer needed
+- Admin-Only Feature: Only administrators can remove data for security
+- Smart Deletion: Remove data based on the same filtering system used for viewing
+- Safe Removal: Data is marked as deleted but can potentially be recovered
+
+
+**Security Features**
+
+🔒 Password Protection
+- All passwords are encrypted using industry-standard security methods
+- Users receive secure access tokens that expire automatically
+- Every request to view or change data requires proper authorization
+
+👥 Role-Based Access
+- Administrator Role: Complete control over all sensor data and system features
+- User Role: Can view and edit data but cannot delete anything
+- Automatic Enforcement: The system automatically prevents unauthorized actions
+- Clear Permissions: Users always know what they can and cannot do
+
 
 ---
+
 
 ## 🛠 Tech Stack
 
@@ -620,14 +713,6 @@ You can test all API endpoints by importing the Postman collection and environme
 
 - **Authentication & Authorization**
 
-  - Implement JWT with Bearer tokens for all API endpoints.
-
-- **Withdraw Transaction Handling**
-
-  - Add rollback mechanism for failed withdrawals.
-  - Implement idempotency to prevent duplicate withdrawals.
-  - Add rate limiting for withdrawals.
-
 - **Environments**
 
   - Separate configuration for development, staging, and production.
@@ -635,11 +720,11 @@ You can test all API endpoints by importing the Postman collection and environme
 - **Testing & CI/CD**
 
   - Unit tests for controller and service layers.
+  - Test the messaging system & auto generation sensor data
   - GitHub Actions workflow for build & test.
 
 - **Deployment**
 
-  - Dockerfile for containerization.
   - Kubernetes manifests for deployment.
 
 - **Monitoring**
@@ -651,9 +736,7 @@ You can test all API endpoints by importing the Postman collection and environme
   - Could be enhanced with better structured error responses.
 
 - **Feature Enhancements**
-  - Expand transaction status (pending, refund, canceled, failed).
-  - Integrate third-party payment gateways.
-  - Prevent withdrawals when balance is zero (backend & frontend validation).
+  
 
 ---
 
