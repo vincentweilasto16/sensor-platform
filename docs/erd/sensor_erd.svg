@@ -1,0 +1,95 @@
+<svg width="800" height="500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="500" fill="#f8f9fa"/>
+  
+  <!-- Title -->
+  <text x="400" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#2c3e50">Entity Relationship Diagram</text>
+  
+  <!-- sensor_data table -->
+  <g transform="translate(100, 80)">
+    <!-- Table container -->
+    <rect x="0" y="0" width="280" height="280" fill="white" stroke="#3498db" stroke-width="2" rx="8"/>
+    
+    <!-- Table header -->
+    <rect x="0" y="0" width="280" height="40" fill="#3498db" rx="8"/>
+    <rect x="0" y="32" width="280" height="8" fill="#3498db"/>
+    <text x="140" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">sensor_data</text>
+    
+    <!-- Primary Key -->
+    <text x="10" y="60" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#e74c3c">🔑 id</text>
+    <text x="80" y="60" font-family="Arial, sans-serif" font-size="12" fill="#666">BIGINT AUTO_INCREMENT</text>
+    
+    <!-- Other fields -->
+    <text x="10" y="80" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50">sensor_type</text>
+    <text x="120" y="80" font-family="Arial, sans-serif" font-size="12" fill="#666">VARCHAR(50) NOT NULL</text>
+    
+    <text x="10" y="100" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50">sensor_value</text>
+    <text x="120" y="100" font-family="Arial, sans-serif" font-size="12" fill="#666">DOUBLE NOT NULL</text>
+    
+    <text x="10" y="120" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50">device_code</text>
+    <text x="120" y="120" font-family="Arial, sans-serif" font-size="12" fill="#666">VARCHAR(20) NOT NULL</text>
+    
+    <text x="10" y="140" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50">device_number</text>
+    <text x="120" y="140" font-family="Arial, sans-serif" font-size="12" fill="#666">INT NOT NULL</text>
+    
+    <text x="10" y="160" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50">timestamp</text>
+    <text x="120" y="160" font-family="Arial, sans-serif" font-size="12" fill="#666">TIMESTAMP NOT NULL</text>
+    
+    <text x="10" y="180" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50">created_at</text>
+    <text x="120" y="180" font-family="Arial, sans-serif" font-size="12" fill="#666">TIMESTAMP NOT NULL</text>
+    
+    <text x="10" y="200" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50">updated_at</text>
+    <text x="120" y="200" font-family="Arial, sans-serif" font-size="12" fill="#666">TIMESTAMP NOT NULL</text>
+    
+    <text x="10" y="220" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50">deleted_at</text>
+    <text x="120" y="220" font-family="Arial, sans-serif" font-size="12" fill="#666">TIMESTAMP NULL</text>
+  </g>
+  
+  <!-- users table -->
+  <g transform="translate(450, 80)">
+    <!-- Table container -->
+    <rect x="0" y="0" width="280" height="220" fill="white" stroke="#27ae60" stroke-width="2" rx="8"/>
+    
+    <!-- Table header -->
+    <rect x="0" y="0" width="280" height="40" fill="#27ae60" rx="8"/>
+    <rect x="0" y="32" width="280" height="8" fill="#27ae60"/>
+    <text x="140" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">users</text>
+    
+    <!-- Primary Key -->
+    <text x="10" y="60" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#e74c3c">🔑 id</text>
+    <text x="60" y="60" font-family="Arial, sans-serif" font-size="12" fill="#666">INT AUTO_INCREMENT</text>
+    
+    <!-- Other fields -->
+    <text x="10" y="80" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50">username</text>
+    <text x="90" y="80" font-family="Arial, sans-serif" font-size="12" fill="#666">VARCHAR(50) UNIQUE</text>
+    
+    <text x="10" y="100" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50">password</text>
+    <text x="90" y="100" font-family="Arial, sans-serif" font-size="12" fill="#666">VARCHAR(255) NOT NULL</text>
+    
+    <text x="10" y="120" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50">role</text>
+    <text x="90" y="120" font-family="Arial, sans-serif" font-size="12" fill="#666">ENUM('admin','user')</text>
+    
+    <text x="10" y="140" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50">created_at</text>
+    <text x="90" y="140" font-family="Arial, sans-serif" font-size="12" fill="#666">TIMESTAMP DEFAULT</text>
+    
+    <text x="10" y="160" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50">updated_at</text>
+    <text x="90" y="160" font-family="Arial, sans-serif" font-size="12" fill="#666">TIMESTAMP DEFAULT</text>
+    
+    <text x="10" y="180" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50">deleted_at</text>
+    <text x="90" y="180" font-family="Arial, sans-serif" font-size="12" fill="#666">TIMESTAMP NULL</text>
+  </g>
+  
+  <!-- Legend -->
+  <g transform="translate(100, 400)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">Legend:</text>
+    <text x="0" y="20" font-family="Arial, sans-serif" font-size="12" fill="#e74c3c">🔑 Primary Key</text>
+    <text x="150" y="20" font-family="Arial, sans-serif" font-size="12" fill="#2c3e50">• No explicit relationships defined in DDL</text>
+  </g>
+  
+  <!-- Note about relationships -->
+  <g transform="translate(100, 450)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="12" fill="#7f8c8d" font-style="italic">
+      Note: Both tables are independent - no foreign key relationships defined in the provided DDL
+    </text>
+  </g>
+</svg>

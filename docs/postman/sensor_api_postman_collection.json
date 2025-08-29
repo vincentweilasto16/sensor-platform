@@ -1,0 +1,1227 @@
+{
+	"info": {
+		"_postman_id": "fd75bdea-0cf8-4bd6-bb09-70d7424f31d2",
+		"name": "Sensor API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20236475"
+	},
+	"item": [
+		{
+			"name": "Service B",
+			"item": [
+				{
+					"name": "Sensor",
+					"item": [
+						{
+							"name": "Get Sensors",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearer-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/sensors?limit=10&page=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"sensors"
+									],
+									"query": [
+										{
+											"key": "device_code",
+											"value": "I",
+											"description": "id1, optional",
+											"disabled": true
+										},
+										{
+											"key": "device_number",
+											"value": "1",
+											"description": "id2, optional",
+											"disabled": true
+										},
+										{
+											"key": "start_time",
+											"value": "2025-08-28T15:51:00Z",
+											"description": "optional",
+											"disabled": true
+										},
+										{
+											"key": "end_time",
+											"value": "2025-08-28T15:51:59Z",
+											"description": "optional",
+											"disabled": true
+										},
+										{
+											"key": "limit",
+											"value": "10",
+											"description": "required"
+										},
+										{
+											"key": "page",
+											"value": "1",
+											"description": "required"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200: Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": []
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/v1/sensors?start_time=2025-08-01T00:00:00Z&end_time=2025-08-25T23:59:59Z&limit=10&page=1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"sensors"
+											],
+											"query": [
+												{
+													"key": "device_code",
+													"value": "A",
+													"description": "id1, optional",
+													"disabled": true
+												},
+												{
+													"key": "device_number",
+													"value": "1",
+													"description": "id2, optional",
+													"disabled": true
+												},
+												{
+													"key": "start_time",
+													"value": "2025-08-01T00:00:00Z",
+													"description": "optional"
+												},
+												{
+													"key": "end_time",
+													"value": "2025-08-25T23:59:59Z",
+													"description": "optional"
+												},
+												{
+													"key": "limit",
+													"value": "10",
+													"description": "required"
+												},
+												{
+													"key": "page",
+													"value": "1",
+													"description": "required"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 26 Aug 2025 21:25:50 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "792"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"ok\",\n    \"data\": [\n        {\n            \"id\": 4,\n            \"sensor_type\": \"humidity\",\n            \"sensor_value\": 55.8,\n            \"device_code\": \"B\",\n            \"device_number\": 1,\n            \"timestamp\": \"2025-08-24T01:22:48Z\",\n            \"created_at\": \"2025-08-24T01:22:48Z\",\n            \"updated_at\": \"2025-08-24T02:40:31Z\",\n            \"deleted_at\": null\n        },\n        {\n            \"id\": 6,\n            \"sensor_type\": \"pressure\",\n            \"sensor_value\": 1012.5,\n            \"device_code\": \"B\",\n            \"device_number\": 2,\n            \"timestamp\": \"2025-08-24T01:22:48Z\",\n            \"created_at\": \"2025-08-24T01:22:48Z\",\n            \"updated_at\": \"2025-08-24T02:40:31Z\",\n            \"deleted_at\": null\n        },\n        {\n            \"id\": 3,\n            \"sensor_type\": \"humidity\",\n            \"sensor_value\": 60.2,\n            \"device_code\": \"A\",\n            \"device_number\": 1,\n            \"timestamp\": \"2025-08-23T01:22:48Z\",\n            \"created_at\": \"2025-08-23T01:22:48Z\",\n            \"updated_at\": \"2025-08-25T23:41:51Z\",\n            \"deleted_at\": null\n        }\n    ],\n    \"paginator\": {\n        \"total_items\": 3,\n        \"total_pages\": 1,\n        \"item_from\": 1,\n        \"item_to\": 3,\n        \"current_page\": 1,\n        \"limit\": 10\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Update Sensors",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearer-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"criteria\": {\r\n        \"device_code\": \"I\",\r\n        \"device_number\": 1,\r\n        \"start_time\": \"2025-08-28T15:51:00Z\",\r\n        \"end_time\": \"2025-08-28T15:51:59Z\"\r\n    },\r\n    \"changes\": {\r\n        \"sensor_value\": 33,\r\n        \"sensor_type\": \"humidity\",\r\n        \"timestamp\": \"2009-05-22T10:27:00Z\"\r\n    }\r\n} ",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/sensors",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"sensors"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200: Success",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"criteria\": {\r\n        \"device_code\": \"KA\",\r\n        \"device_number\": 19,\r\n        \"start_time\": \"2007-10-30T07:30:00Z\",\r\n        \"end_time\": \"2007-10-30T07:50:00Z\"\r\n    },\r\n    \"changes\": {\r\n        \"sensor_value\": 332.3,\r\n        \"sensor_type\": \"humidity\",\r\n        \"timestamp\": \"2009-05-22T10:27:00Z\"\r\n    }\r\n} ",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/v1/sensors",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"sensors"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 26 Aug 2025 21:28:27 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "36"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"ok\"\n}"
+								},
+								{
+									"name": "400: No filter provided",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"criteria\": {\r\n        // \"device_code\": \"KA\",\r\n        // \"device_number\": 19,\r\n        // \"start_time\": \"2007-10-30T07:30:00Z\",\r\n        // \"end_time\": \"2007-10-30T07:50:00Z\"\r\n    },\r\n    \"changes\": {\r\n        // \"sensor_value\": 332.3,\r\n        // \"sensor_type\": \"humidity\",\r\n        // \"timestamp\": \"2009-05-22T10:27:00Z\"\r\n    }\r\n} ",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/v1/sensors",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"sensors"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 26 Aug 2025 21:29:11 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "74"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"error\",\n    \"message\": \"at least one filter is required for update\"\n}"
+								},
+								{
+									"name": "400: No changes data provided",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"criteria\": {\r\n        \"device_code\": \"KA\"\r\n        // \"device_number\": 19,\r\n        // \"start_time\": \"2007-10-30T07:30:00Z\",\r\n        // \"end_time\": \"2007-10-30T07:50:00Z\"\r\n    },\r\n    \"changes\": {\r\n        // \"sensor_value\": 332.3,\r\n        // \"sensor_type\": \"humidity\",\r\n        // \"timestamp\": \"2009-05-22T10:27:00Z\"\r\n    }\r\n} ",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/v1/sensors",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"sensors"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 26 Aug 2025 21:29:51 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "77"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"error\",\n    \"message\": \"at least one field to update must be provided\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete Sensors",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearer-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"device_code\": \"I\",\r\n  \"device_number\": 1,\r\n  \"start_time\": \"2025-08-28T15:51:00Z\",\r\n  \"end_time\": \"2025-08-28T15:51:59Z\"\r\n} ",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/sensors",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"sensors"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "400: No filter provided",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n//   \"device_code\": \"A\",\r\n//   \"device_number\": 1,\r\n//   \"start_time\": \"2007-10-30T07:30:00Z\",\r\n//   \"end_time\": \"2007-10-30T07:50:00Z\"\r\n} ",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/v1/sensors",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"sensors"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 26 Aug 2025 21:22:01 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "76"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"error\",\n    \"message\": \"at least one filter is required for deletion\"\n}"
+								},
+								{
+									"name": "400: Start time greater than end time",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"device_code\": \"A\",\r\n  \"device_number\": 1,\r\n  \"start_time\": \"2007-10-30T07:55:00Z\",\r\n  \"end_time\": \"2007-10-30T07:50:00Z\"\r\n} ",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/v1/sensors",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"sensors"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 26 Aug 2025 21:23:47 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "74"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"error\",\n    \"message\": \"start time cannot be greater than end time\"\n}"
+								},
+								{
+									"name": "200: Success",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n//   \"device_code\": \"A\",\r\n//   \"device_number\": 1,\r\n  \"start_time\": \"2007-10-30T07:30:00Z\",\r\n  \"end_time\": \"2007-10-30T07:50:00Z\"\r\n} ",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/v1/sensors",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"sensors"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 26 Aug 2025 21:24:47 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "36"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"ok\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "Register",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"username\": \"admin\",\r\n  \"password\": \"admin\",\r\n  \"role\": \"admin\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/auth/register",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200: Success Register User",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"username\": \"user\",\r\n  \"password\": \"user\",\r\n  \"role\": \"user\"\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/v1/auth/register",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"auth",
+												"register"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 28 Aug 2025 14:47:53 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "36"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"ok\"\n}"
+								},
+								{
+									"name": "200: Success Register Admin",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"username\": \"admin\",\r\n  \"password\": \"admin\",\r\n  \"role\": \"admin\"\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/v1/auth/register",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"auth",
+												"register"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 28 Aug 2025 14:47:53 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "36"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"ok\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"username\": \"user\",\r\n  \"password\": \"user\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Service A",
+			"item": [
+				{
+					"name": "Sensor",
+					"item": [
+						{
+							"name": "Generate Sensor Manual",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"sensor_value\": 251.3,\r\n  \"sensor_type\": \"temperature\",\r\n  \"device_code\": \"KA\",\r\n  \"device_number\": 19,\r\n  \"timestamp\": \"2007-10-30T07:30:00Z\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/v1/sensors/generate/manual",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"sensors",
+										"generate",
+										"manual"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Start Sensor Generator",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8083/api/v1/sensors/generate/start",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8083",
+									"path": [
+										"api",
+										"v1",
+										"sensors",
+										"generate",
+										"start"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Temperature Instance - 200: Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8081/api/v1/sensors/generate/start",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v1",
+												"sensors",
+												"generate",
+												"start"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 29 Aug 2025 05:14:00 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "58"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"sensor generator started\"\n}"
+								},
+								{
+									"name": "Humidity Instance - 200: Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8082/api/v1/sensors/generate/start",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"api",
+												"v1",
+												"sensors",
+												"generate",
+												"start"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 29 Aug 2025 05:14:00 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "58"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"sensor generator started\"\n}"
+								},
+								{
+									"name": "Pressure Instance - 200: Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8083/api/v1/sensors/generate/start",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8083",
+											"path": [
+												"api",
+												"v1",
+												"sensors",
+												"generate",
+												"start"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 29 Aug 2025 05:14:00 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "58"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"sensor generator started\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Stop Sensor Generator",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8083/api/v1/sensors/generate/stop",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8083",
+									"path": [
+										"api",
+										"v1",
+										"sensors",
+										"generate",
+										"stop"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Temperature Instance - 200: Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8081/api/v1/sensors/generate/stop",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v1",
+												"sensors",
+												"generate",
+												"stop"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 29 Aug 2025 05:12:13 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "58"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"sensor generator stopped\"\n}"
+								},
+								{
+									"name": "Humidity Instance - 200: Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8082/api/v1/sensors/generate/stop",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"api",
+												"v1",
+												"sensors",
+												"generate",
+												"stop"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 29 Aug 2025 05:12:13 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "58"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"sensor generator stopped\"\n}"
+								},
+								{
+									"name": "Pressure Instance - 200: Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8083/api/v1/sensors/generate/stop",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8083",
+											"path": [
+												"api",
+												"v1",
+												"sensors",
+												"generate",
+												"stop"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 29 Aug 2025 05:12:13 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "58"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"sensor generator stopped\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Update Generate Sensor Frequency",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"frequency\": 25   // in seconds\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8083/api/v1/sensors/generate/frequency",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8083",
+									"path": [
+										"api",
+										"v1",
+										"sensors",
+										"generate",
+										"frequency"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Temperature Instance - 200: Success",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"frequency\": 25   // in seconds\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8081/api/v1/sensors/generate/frequency",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8081",
+											"path": [
+												"api",
+												"v1",
+												"sensors",
+												"generate",
+												"frequency"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 29 Aug 2025 05:16:57 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "36"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"ok\"\n}"
+								},
+								{
+									"name": "Humidity Instance - 200: Success",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"frequency\": 25   // in seconds\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8082/api/v1/sensors/generate/frequency",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"api",
+												"v1",
+												"sensors",
+												"generate",
+												"frequency"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 29 Aug 2025 05:16:57 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "36"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"ok\"\n}"
+								},
+								{
+									"name": "Pressure Instance - 200: Success",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"frequency\": 25   // in seconds\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8083/api/v1/sensors/generate/frequency",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8083",
+											"path": [
+												"api",
+												"v1",
+												"sensors",
+												"generate",
+												"frequency"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 29 Aug 2025 05:16:57 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "36"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"ok\"\n}"
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

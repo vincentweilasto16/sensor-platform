@@ -1,0 +1,48 @@
+-- name: InsertSensorData :exec
+INSERT INTO sensor_data (sensor_type, sensor_value, device_code, device_number, timestamp)
+VALUES (?, ?, ?, ?, ?);
+
+-- name: GetSensors :many
+SELECT *
+FROM sensor_data
+WHERE 
+    (sqlc.narg(device_code) IS NULL OR device_code = sqlc.narg(device_code))
+    AND (sqlc.narg(device_number) IS NULL OR device_number = sqlc.narg(device_number))
+    AND (sqlc.narg(start_time) IS NULL OR timestamp >= sqlc.narg(start_time))
+    AND (sqlc.narg(end_time) IS NULL OR timestamp <= sqlc.narg(end_time))
+    AND deleted_at IS NULL
+ORDER BY created_at DESC
+LIMIT ? OFFSET ?;
+
+-- name: CountSensors :one
+SELECT COUNT(*)
+FROM sensor_data
+WHERE 
+    (sqlc.narg(device_code) IS NULL OR device_code = sqlc.narg(device_code))
+    AND (sqlc.narg(device_number) IS NULL OR device_number = sqlc.narg(device_number))
+    AND (sqlc.narg(start_time) IS NULL OR timestamp >= sqlc.narg(start_time))
+    AND (sqlc.narg(end_time) IS NULL OR timestamp <= sqlc.narg(end_time))
+    AND deleted_at IS NULL;
+    
+-- name: DeleteSensors :exec
+UPDATE sensor_data
+SET deleted_at = NOW()
+WHERE 
+    (sqlc.narg(device_code) IS NULL OR device_code = sqlc.narg(device_code))
+    AND (sqlc.narg(device_number) IS NULL OR device_number = sqlc.narg(device_number))
+    AND (sqlc.narg(start_time) IS NULL OR timestamp >= sqlc.narg(start_time))
+    AND (sqlc.narg(end_time) IS NULL OR timestamp <= sqlc.narg(end_time))
+    AND deleted_at IS NULL;
+
+-- name: UpdateSensors :exec
+UPDATE sensor_data
+SET 
+    sensor_value = COALESCE(sqlc.narg(sensor_value), sensor_value),
+    sensor_type = COALESCE(sqlc.narg(sensor_type), sensor_type),
+    timestamp = COALESCE(sqlc.narg(timestamp), timestamp)
+WHERE
+    (sqlc.narg(device_code) IS NULL OR device_code = sqlc.narg(device_code))
+    AND (sqlc.narg(device_number) IS NULL OR device_number = sqlc.narg(device_number))
+    AND (sqlc.narg(start_time) IS NULL OR timestamp >= sqlc.narg(start_time))
+    AND (sqlc.narg(end_time) IS NULL OR timestamp <= sqlc.narg(end_time))
+    AND deleted_at IS NULL;
