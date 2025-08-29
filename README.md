@@ -588,11 +588,23 @@ The sensor_data table is optimized for high-volume IoT data:
 
 ## 📡 Postman Collection
 
-You can test all API endpoints by importing this collection into Postman:
 
+You can test all API endpoints by importing the Postman collection and environment into Postman:
+
+### 1. Import Collection
 - File: [sensor_api_postman_collection.json](./docs/postman/sensor_api_postman_collection.json)
-- Base URL: http://localhost:8080/api/v1
-- Set `Authorization: Bearer {{token}}` for endpoints that require authentication.
+- This collection contains all your API requests including examples.
+
+### 2. Import Environment
+- File: [sensor_api_local postman_environment.json](./docs/postman/sensor_api_local_postman_environment.json)
+- The environment contains variables used in the requests, such as:
+  - `{{token}}` – JWT token for authorization
+
+### 3. Usage
+1. Import both files into Postman.  
+2. Select the imported environment from the top-right dropdown.    
+3. Set `{{token}}` by logging in via the `/auth/login` endpoint or manually adding a valid JWT.  
+4. Run requests — all endpoints will use the variables automatically.
 
 
 ---
