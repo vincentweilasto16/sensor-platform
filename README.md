@@ -137,7 +137,26 @@ Before running the application, make sure you have the following installed:
 
 ## 🏗️ Software Architecture
 
+![Software Architecture Schematic Diagram](docs/software_architecture/software_architecture_schematic_diagram.svg)
 
+
+### Architecture Diagram Overview
+
+This schematic illustrates a microservice-based IoT sensor data processing system designed for scalability and high performance. The architecture follows a clean separation of concerns with distinct layers for data generation, message streaming, processing, and storage.
+
+
+**Key Data Flow**
+- Data Generation → Multiple Microservice A instances generate sensor data (temperature, humidity, pressure) with configurable frequencies through REST APIs.
+
+- Message Streaming → Apache Kafka handles high-throughput data streaming between producers and consumers, ensuring reliable message delivery.
+
+- Data Processing → Scalable Microservice B cluster processes incoming Kafka streams, implements JWT authentication, and provides comprehensive REST APIs for CRUD operations.
+
+- Storage → MySQL database stores sensor data with advanced filtering capabilities by ID combinations, time ranges, and pagination support.
+
+
+**Current Implementation**
+The system is containerized with Docker for local development and uses JWT authentication for secure API access. Components marked as "Not implemented yet" (API Gateway, Redis Cache, Kubernetes, Monitoring) represent planned enhancements for future development.
 
 
 ---
