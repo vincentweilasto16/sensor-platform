@@ -19,8 +19,9 @@ It is designed to generate, receive, process, and store sensor data, while expos
 7. [Database Entity Relationship Diagram (ERD)](#database-entity-relationship-diagram)  
 8. [Setup & Run](#setup--run)  
 9. [API Contract](#api-contract)
-10. [Testing Application](#testing-application)  
-11. [Limitations & Future Improvements](#limitations--future-improvements)
+10. [Postman Collection](#postman-collection)
+11. [Testing Application](#testing-application)  
+12. [Limitations & Future Improvements](#limitations--future-improvements)
 
 ---
 
@@ -580,6 +581,18 @@ The sensor_data table is optimized for high-volume IoT data:
           "message": "ok"
       }
       ```
+
+
+---
+
+
+## 📡 Postman Collection
+
+You can test all API endpoints by importing this collection into Postman:
+
+- File: [sensor_api_postman_collection.json](./docs/postman/sensor_api_postman_collection.json)
+- Base URL: http://localhost:8080/api/v1
+- Set `Authorization: Bearer {{token}}` for endpoints that require authentication.
 
 
 ---
