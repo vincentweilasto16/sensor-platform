@@ -706,41 +706,99 @@ You can test all API endpoints by importing the Postman collection and environme
 ## 🧪 Testing Application
 
 
+// Coming Soon
+
 
 ---
 
 ## 🔮 Limitations & Future Improvements
 
-- **Authentication & Authorization**
+While the current implementation meets the core project requirements, several limitations remain, and there are opportunities for enhancement:
 
-- **Environments**
+1. **Swagger API Documentation**
+   - Limitation: Swagger documentation for all endpoints has not been fully implemented.
+   - Future Improvement: Generate complete Swagger docs for all REST API endpoints in Microservice B to improve developer experience and ease of testing.
 
-  - Separate configuration for development, staging, and production.
+2. **Load Balancing & Auto-Scaling**
+   - Limitation: No API Gateway, load balancing, or auto-scaling implemented.
+   - Future Improvement:
+     - Introduce API Gateway for centralized request entry.
+     - Implement load balancing across Microservice B instances.
+     - Enable auto-scaling using Kubernetes or other orchestration tools to handle high loads.
 
-- **Testing & CI/CD**
+3. **Unit Testing & CI/CD**
+   - Limitation: Unit tests and integration tests are not implemented.
+   - Future Improvement:
+     - Add unit tests for controller and service layers.
+     - Test messaging systems and automatic sensor data generation.
+     - Set up CI/CD pipelines (e.g., GitHub Actions) for automated build and test.
 
-  - Unit tests for controller and service layers.
-  - Test the messaging system & auto generation sensor data
-  - GitHub Actions workflow for build & test.
+4. **Payload Validation & Rate Limiting**
+   - Limitation: Minimal payload validation and no rate limiting.
+   - Future Improvement:
+     - Enforce stricter validation for sensor values, IDs, timestamps, and device codes.
+     - Restrict sensor frequency updates below a minimum threshold.
+     - Implement rate limiting to prevent API abuse.
 
-- **Deployment**
+5. **JWT Authentication & Authorization**
+   - Limitation: Only access tokens implemented; refresh token mechanism is missing.
+   - Future Improvement:
+     - Implement refresh tokens with single-use and soft deletion.
+     - Use cron jobs to hard delete expired tokens.
+     - Expand authorization using roles and permissions.
+     - Consider kid in JWT for key management.
 
-  - Kubernetes manifests for deployment.
+6. **Kafka Data Stream & Reliability**
+   - Limitation: Single partition with replication factor = 1; no persistent storage.
+   - Future Improvement:
+     - Increase partitions and replication factor for fault tolerance.
+     - Store Kafka data on disk for persistence.
+     - Utilize message keys to maintain order and optimize throughput.
+     - Monitor broker health and performance.
 
-- **Monitoring**
+7. **Database Design & ERD**
+   - Limitation: Minimal tables; limited validation.
+   - Future Improvement:
+     - Separate tables for users, roles, permissions, and sensor metadata (sensors, devices, sensor_types).
+     - Validate device codes, sensor value ranges, and IDs.
+     - Apply constraints to ensure data integrity.
 
-  - Currently only basic logging; can be improved with Prometheus & Grafana.
+8. **Environments**
+   - Limitation: No clear separation of configs for development, staging, production.
+   - Future Improvement:
+     - Create separate configuration files or environment variables per environment.
+     - Ensure proper security, logging, and database connections per environment.
 
-- **Error Handling**
+9. **Monitoring & Observability**
+   - Limitation: Limited health checks, logging, and metrics collection.
+   - Future Improvement:
+     - Add centralized logging, monitoring, and alerting.
+     - Track API usage, database performance, and sensor data throughput.
+     - Integrate Prometheus/Grafana for observability.
 
-  - Could be enhanced with better structured error responses.
+10. **Error Handling**
+    - Limitation: Error responses are minimal
+    - Future Improvement:
+      - Ensure consistency across all endpoints and services.
 
-- **Feature Enhancements**
+11. **Deployment**
+    - Limitation: Deployment is manual; no orchestration.
+    - Future Improvement:
+      - Use Kubernetes manifests for deploying microservices.
+      - Implement rolling updates, service discovery, and scaling policies.
+
+12. **Performance Optimization**
+    - Limitation: No caching or query optimization implemented.
+    - Future Improvement:
+      - Introduce Redis caching for frequently accessed data.
+      - Optimize database queries and indexes for large datasets.
+      - Apply batching or streaming techniques for high-frequency sensor data.
   
 
 ---
 
 ## 📦 Note
 
+// Coming Soon
 
 ---
