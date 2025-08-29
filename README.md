@@ -14,11 +14,13 @@ It is designed to generate, receive, process, and store sensor data, while expos
 2. [Assumptions](#assumptions)  
 3. [Process Flow](#process-flow)  
 4. [Tech Stack](#tech-stack)  
-5. [Prerequisites](#prerequisites)  
-6. [Database Entity Relationship Diagram (ERD)](#database-entity-relationship-diagram)  
-7. [Setup & Run](#setup--run)  
-8. [API Contract](#api-contract)  
-9. [Limitations & Future Improvements](#limitations--future-improvements)
+5. [Prerequisites](#prerequisites)
+6. [Software Architecture](#software-architecture)
+7. [Database Entity Relationship Diagram (ERD)](#database-entity-relationship-diagram)  
+8. [Setup & Run](#setup--run)  
+9. [API Contract](#api-contract)
+10. [Testing Application](#testing-application)  
+11. [Limitations & Future Improvements](#limitations--future-improvements)
 
 ---
 
@@ -132,7 +134,16 @@ Before running the application, make sure you have the following installed:
 
 ---
 
-## Database Entity Relationship Diagram (ERD)
+
+## 🏗️ Software Architecture
+
+
+
+
+---
+
+
+## 🗄 Database Entity Relationship Diagram (ERD)
 
 
 The following Entity-Relationship Diagram (ERD) illustrates the database structure for sensor platform spesifically on **Microservice B**:
@@ -210,43 +221,84 @@ The sensor_data table is optimized for high-volume IoT data:
 - **Flexible sensor types**: VARCHAR field accommodates various sensor categories
 - **Precise timestamps**: Ensures accurate temporal data tracking
 
-*This ERD represents the current database structure. Future iterations may include additional tables and relationships to support enhanced functionality.*
+**This ERD represents the current database structure. Future iterations may include additional tables and relationships to support enhanced functionality.**
 ---
 
 ## 🚀 Setup & Run
 
 1. **Clone the repository**
-
+   Clone the project and open it in your preferred IDE or code editor
+   
    ```bash
    git clone https://github.com/vincentweilasto16/sensor-platform.git
    ```
 
 2. **Install dependencies**
+   Make sure Go is installed, then install the required dependencies:
+   
    ```bash
    go mod tidy
    go mod vendor
    ```
-3. Setup environment
-
+   
+3. **Set up environment variables**
+   Before building or running the project, create a `.env` file from the example:
+   
    ```bash
    cp .env.example .env
    ```
+   
+4. Start Docker Daemon
+   Ensure Docker is running on your machine. The project includes a docker-compose.yml file that defines all required services:
+   - Zookeeper
+   - Kafka
+   - MySQL
+   - Microservice B (Data Receiver & API)
+   - Microservice A instances (Temperature, Humidity, Pressure)
 
-   Adjust _.env_ to match your local PostgreSQL or Docker Setup
+5. Prepare the database
+   Before running all services, make sure MySQL is ready and the database exists:
 
-4. Create the database
+   1. **Build and start MySQL**
 
+      Start only the MySQL service using Docker Compose:
+   
+      ```bash
+      docker compose up mysql
+      ```
+
+      > This will build and start the MySQL container using the credentials defined in your `.env` file (`DB_USER`, `DB_PASSWORD`, `DB_PORT`).
+
+   2. **Connect to MySQL**
+      
+      Once the container is running, connect to MySQL using your preferred client (e.g., MySQL CLI, TablePlus, DBeaver) with the following details:
+      
+      - **Host:** `localhost`  
+      - **Port:** `${DB_PORT}` (from `.env`)  
+      - **Username:** `${DB_USER}`  
+      - **Password:** `${DB_PASSWORD}`  
+
+      > Ensure the connection is successful before proceeding.
+
+   3. **Create the database**
+      
+      After a successful connection, create the database defined in your `.env` file (`DB_NAME`) if it doesn’t already exist:
+
+      ```sql
+      CREATE DATABASE IF NOT EXISTS your_db_name;
+      ```
+
+6. Start All Services
+   Build and start all services:
+   
    ```bash
-   CREATE DATABASE wallet_db;
+   docker compose up --build
    ```
+   
+   - Database migration runs automatically after Microservice B starts.
+   - Kafka topic (sensor-topic) is automatically created during the Docker build.
+   - Sensor data generation starts automatically once all services are running.
 
-5. Run the application
-
-   ```bash
-   go run cmd/main.go
-   ```
-
-6. Test the API with Postman
 
 ---
 
@@ -362,6 +414,13 @@ The sensor_data table is optimized for high-volume IoT data:
         }
     }
    ```
+
+---
+
+
+## 🧪 Testing Application
+
+
 
 ---
 
